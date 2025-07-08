@@ -1,10 +1,295 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+* {
+    padding:0;
+    margin:0;
+    font-family:"PT Sans", Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+    color: #4e4e4e;
+}
+
+button {
+    border:0;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+h1 {
+    font-size:32px;
+    color:rgb(51,51,51);
+}
+
+body {
+    background: #f2f2f2;
+}
+
+/*header*/
+
+.header {
+    display:flex;
+    padding:16px 74px;
+    justify-content: center;
+    position:fixed;
+    background:white;
+    top:0;
+}
+
+.buttons {
+    display:flex;
+    align-items: flex-end;
+    margin-left:36px;
+}
+
+.buttons a {
+    margin-left:4px;
+    padding:10px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius:12px;
+    width:120px;
+}
+
+.auth_button {
+    background:white;
+    padding:10px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius:12px;
+    width:120px;
+    color: #4e4e4e;
+}
+
+.search_button {
+    width:0;
+    height:0;
+}
+
+a .icon {
+    margin-bottom: 3px;
+}
+
+button .icon {
+    margin-bottom: 3px; 
+}
+
+.buttons a:hover, .auth_button:hover {
+    background: #f2f2f2;
+}
+
+.header {
+    display:flex;
+    align-items: center;
+}
+
+#logo_img {
+    width:180px;
+}
+
+#logo_img:hover {
+    opacity: .9;
+}
+
+.auth_button .icon {
+    width:26px;
+}
+
+.icon {
+    height:26px;
+}
+
+#search_input {
+    height:100%;
+    padding: 24px 66px 24px 12px;
+    border-radius:12px;
+    border-width: 0px;
+    background: #f2f2f2;
+    width:600px;
+    outline:none;
+}
+
+.search_wrapper {
+    margin-left: 40px;
+}
+
+.search_img {
+    position:relative;
+    right:50px;
+    top: 10px;
+    border-radius: 12px;
+}
+
+.search_img:hover {
+    background: #f2f2f2;
+    box-shadow: 0 0 0 10px #f2f2f2;
+}
+
+/*footer*/
+
+footer {
+    display:flex;
+    flex-direction: column;
+    padding: 20px 74px;
+    background: #333;
+}
+
+.footer_links {
+    padding:20px 0;
+    border-bottom:1px solid #444444;
+}
+
+.footer_logo {
+    width:90px;
+}
+
+.footer_logo:hover {
+    opacity: .8;
+}
+
+.footer_comment {
+    margin:20px auto 0 auto;
+    color: #999;
+}
+
+/*auth_window*/
+
+.auth_container {
+    display: flex;
+    justify-content: center;
+}
+
+.auth_window {
+    background:white;
+    border-radius: 12px;
+    position:fixed;
+    top:112px;
+    width:320px;
+    z-index: 2;
+}
+
+.auth_content {
+    display:flex;
+    flex-direction: column;
+    padding:20px;
+}
+
+.auth_top {
+    display: flex;
+    color:#333;
+    justify-content: space-between;
+    font-weight: 700;
+}
+
+.auth_top span {
+    font-size: 22px;
+}
+
+.auth_link {
+    color: #0d61af;
+    font-size: 14px;
+    line-height: 20px;
+    margin-top: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+}
+
+.auth_link:hover {
+    color:rgb(252,88,8);
+ }
+
+.auth_input {
+    width:256px;
+    padding: 0 12px;
+    border-radius:8px;
+    border:1px solid #e5e5e5;
+    height:64px;
+    background: rgb(242, 242, 242);
+    outline:none;
+}
+
+.auth_input:hover {
+    background: rgb(232, 232, 232);
+}
+
+.auth_input:focus {
+    background:white;
+    box-shadow: 0 0 0 1px #0000000a,0 4px 4px #0000000a,0 20px 40px #00000014;
+}
+
+.auth_label {
+    position:relative;
+    top:42px;
+    left:13px;
+    color:#8c8c8c;
+    pointer-events: none;
+    line-height: 16px;
+}
+
+.check_field {
+    margin-top:20px;
+    display:flex;
+    align-items: center;
+    line-height: 16px;
+}
+
+.check_field label {
+    cursor:pointer;
+    padding-left:4px;
+}
+
+.auth_checkbox {
+    accent-color:rgb(252,88,8);
+    width:16px;
+    height:16px;
+    cursor:pointer;
+}
+
+.auth_press {
+    height:64px;
+    width:100%;
+    background-image: linear-gradient(0deg, #fc8507, #ffa218);
+    color:white;
+    font-weight: 700;
+    border-radius: 8px;
+    margin-top:20px;
+    border:none;
+    cursor:pointer;
+}
+
+.auth_press:hover {
+    opacity: .9;
+}
+
+/*user_styles*/
+
+.user_container {
+    margin-top:99.4px;
+    padding: 20px 74px;
+    display:flex;
+    flex-direction: column;
+}
+
+.user_container h2 {
+    color:#fc8507;
+}
+
+.user_container span {
+    color:rgb(51, 51, 51);
+}
+
+.user_container h2:not(:first-child), .user_container span {
+    margin-top:20px;
+}
+
+.user_container+footer, .fix_footer+footer {
+    position:absolute;
+    bottom:0;
+    right:0;
+    left:0;
+}
