@@ -1,0 +1,38 @@
+<div class="auth_container">
+  <div class="auth_window"  id = "auth_form">
+      <div class="auth_content">
+          <div class="auth_top">
+              <span>Создание проекта</span>
+          </div>
+
+          <% if @error %>
+            <span class="auth_error"> Ошибка создания проекта </span>
+          <% end %>
+
+          <%= form_for(:projects, url: :projects, html: { method: :post }) do |f| %>
+
+          <div class="field">
+            <%= f.label "Имя", class: "auth_label" %>
+            <%= f.text_field :name, class: "auth_input", autofocus: true, autocomplete: "name", value: @name%>
+          </div>
+
+          <div class="field">
+            <%= f.label "Цель", class: "auth_label" %>
+            <%= f.text_field :goal, class: "auth_input", autocomplete: "goal", value: @goal%>
+          </div>
+
+          <div class="field">
+            <%= f.label "Описание", class: "auth_label" %>
+            <%= f.text_field :description, class: "auth_input", autocomplete: "description", value: @description %>
+          </div>
+
+          <div class="actions">
+            <%= f.submit "Создать", class:  "auth_press" %>
+          </div>
+          <% end %>
+
+          <%= link_to "Назад", "/projects", class: "auth_link" %>
+            
+      </div>
+  </div>
+</div>

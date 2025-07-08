@@ -266,6 +266,19 @@ footer {
     opacity: .9;
 }
 
+.auth_error {
+    margin-top:20px;
+    padding: 0 12px;
+    height:64px;
+    border: 1px solid #910a0a;
+    color:  #910a0a;
+    background: #e7a0a0;
+    border-radius: 8px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /*user_styles*/
 
 .user_container {
