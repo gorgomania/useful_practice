@@ -6,7 +6,11 @@
           </div>
 
           <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-          <%= render "devise/shared/error_messages", resource: resource %>
+            <% flash.each do |type, msg| %>
+              <div class = "auth_error">
+                  <%= msg %>
+              </div>
+            <% end %>
 
           <div class="field">
             <%= f.label :email, class: "auth_label" %>

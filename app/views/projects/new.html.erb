@@ -5,8 +5,10 @@
               <span>Создание проекта</span>
           </div>
 
-          <% if @error %>
-            <span class="auth_error"> Ошибка создания проекта </span>
+          <% flash.each do |type, msg| %>
+            <div class = "auth_error">
+                <%= msg %>
+            </div>
           <% end %>
 
           <%= form_for(:projects, url: :projects, html: { method: :post }) do |f| %>

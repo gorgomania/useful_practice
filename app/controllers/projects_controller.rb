@@ -1,6 +1,5 @@
 class ProjectsController < ApplicationController
   def index
-    @error = false
     @name = nil
     @goal = nil
     @description = nil
@@ -8,23 +7,31 @@ class ProjectsController < ApplicationController
     @search_query = nil
   end
   def create
-    name = params[:projects][:name]
-    goal = params[:projects][:goal]
-    description = params[:projects][:description]
-    project = current_user.project.create(name: name, goal: goal, description: description)
-    if project.id == nil
-      @error = true
+    name = project_params[:name]
+    goal = project_params[:goal]
+    description = project_params[:description]
+    project = Project.new(user: current_user, name: name, goal: goal, description: description)
+    if project.save
+      redirect_to "/projects", notice: "Проект успешно создан."
+    else
       @name = name
       @goal = goal
       @description = description
+      if project.errors.messages[:name][0] == "has already been taken"
+        flash.now[:alert] = "Имя уже используется."
+      else
+        flash.now[:alert] = "Необходимо определить имя."
+      end
       render "new"
-    else
-      redirect_to "/projects"
     end
   end
   def new
   end
 
   def show
+  end
+
+  def project_params
+    params.require(:projects).permit(:name, :goal, :desсription)
   end
 end

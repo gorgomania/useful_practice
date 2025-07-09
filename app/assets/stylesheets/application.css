@@ -338,3 +338,17 @@ footer {
 .project_name:hover {
    color:rgb(252,88,8);
 }
+
+.project_success {
+    margin-top:20px;
+    padding: 0 12px;
+    height:64px;
+    width:280px;
+    border: 1px solid #0a9130;
+    color:  #0a9130;
+    background: #a0e7b1;
+    border-radius: 8px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}

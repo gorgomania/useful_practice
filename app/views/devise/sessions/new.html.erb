@@ -6,7 +6,11 @@
           </div>
 
           <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-          <%= render "devise/shared/error_messages", resource: resource %>
+            <% flash.each do |type, msg| %>
+              <div class = "auth_error">
+                  <%= msg %>
+              </div>
+            <% end %>
             <div class="field">
               <%= f.label :email, class: "auth_label" %>
               <%= f.email_field :email, class: "auth_input", id: "auth_log", autofocus: true, autocomplete: "email" %>
