@@ -4,6 +4,8 @@ class ProjectsController < ApplicationController
     @name = nil
     @goal = nil
     @description = nil
+    @projects = current_user.project
+    @search_query = nil
   end
   def create
     name = params[:projects][:name]
@@ -21,5 +23,8 @@ class ProjectsController < ApplicationController
     end
   end
   def new
+  end
+
+  def show
   end
 end

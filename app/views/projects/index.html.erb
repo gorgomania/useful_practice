@@ -1,9 +1,34 @@
 <body>
     <%= render template: "layouts/header"%>
-    <div class = "user_container">
-        <h1>
-            Мои проекты 
-        </h1>
-    </div>
+    <main class = "user_container">
+        <% if @search_query%>
+            <h1> Результаты поиска </h1>
+        <% else %>
+            <h1> Мои проекты </h1>
+        <% end %>
+        <%if @projects != []%>
+            <div class="projects_list">
+                <% @projects.each do |project| %>
+                    <div class="project_card" id = "card<%= project.id %>">
+                        <%= link_to project.name, "/projects/" + project.id.to_s(), class: "project_name" %>
+                        <h2> Цель </h2>
+                        <span>
+                            <%= project.goal %>
+                        </span>
+                        <h2> Описание </h2>
+                        <span>
+                            <%= project.description %>
+                        </span>
+                    </div>
+                <% end %>
+            </div>
+        <%else%>
+            <% if @search_query%>
+                <h2> По результатам вашего запроса "<%=@value%>" ничего не найдено. </h2>
+            <% else %>
+                <h2> У вас пока нет проектов. </h2>
+            <% end %>
+        <%end%>
+    </main>
     <%= render template: "layouts/footer"%>
 </body>
