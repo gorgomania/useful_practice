@@ -17,16 +17,16 @@
                     <div class="project_card" id = "card<%= project.id %>">
                         <%= link_to project.name, "/projects/" + project.id.to_s(), class: "project_name" %>
                         <% if project.goal %>
-                        <h2> Цель </h2>
-                        <span>
-                            <%= project.goal %>
-                        </span>
+                            <h2> Цель </h2>
+                            <span>
+                                <%= project.goal %>
+                            </span>
                         <% end %>
                         <% if project.description %>
-                        <h2> Описание </h2>
-                        <span>
-                            <%= project.description %>
-                        </span>
+                            <h2> Описание </h2>
+                            <span>
+                                <%= project.description %>
+                            </span>
                         <% end %>
                     </div>
                 <% end %>

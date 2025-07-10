@@ -12,5 +12,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "projects#index"
-  resources :users, :projects
+  resources :users, :projects, :tasks
 end
