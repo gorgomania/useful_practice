@@ -11,7 +11,7 @@
             </div>
           <% end %>
 
-          <%= form_for(:tasks, url: "/projects/"+@project_id+"/tasks", html: { method: :post }) do |f| %>
+          <%= form_for(:tasks, url: project_tasks_path(@project_id), html: { method: :post }) do |f| %>
 
           <div class="field">
             <%= f.label "Имя", class: "auth_label" %>
@@ -23,7 +23,7 @@
           </div>
           <% end %>
 
-          <%= link_to "Назад", "/projects/"+@project_id, class: "auth_link" %>
+          <%= link_to "Назад", project_path(@project_id), class: "auth_link" %>
             
       </div>
   </div>

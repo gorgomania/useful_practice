@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
       if project.errors.messages[:name][0] == "has already been taken"
         flash.now[:alert] = "Имя уже используется."
       else
-        flash.now[:alert] = "Необходимо определить имя."
+        flash.now[:alert] = "Имя не может быть пустым."
       end
       @name = name
       @goal = goal
