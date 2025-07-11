@@ -352,3 +352,67 @@ footer {
     align-items: center;
     justify-content: center;
 }
+
+/*tasks styles*/
+
+.new_task {
+    height:40px;
+    width:176px;
+    background-image: linear-gradient(0deg, #fc8507, #ffa218);
+    color:white;
+    font-weight: 700;
+    border-radius: 4px;
+    margin-top:20px;
+    display:flex;
+    align-items:center;
+    justify-content: center;
+}
+
+.new_task:hover {
+    opacity: .9;
+}
+
+.task_name {
+    text-align: left;
+    line-height: 22px;
+    font-size: 24px;
+    font-weight: 700;
+    color:rgb(51, 51, 51);
+    margin-top:8px;
+}
+
+.task_card {
+    background: white;
+    border-radius: 12px;
+    display:flex;
+    flex-direction: column;
+    padding:12px 20px 20px 20px;
+}
+
+.task_card_top {
+    display:flex;
+    justify-content: space-between;
+}
+
+.task_card button {
+    border-radius:8px;
+    margin-left:4px;
+    padding:8px;
+    background-color: white;
+}
+
+.task_card img {
+    width:24px;
+    height:24px;
+}
+
+.task_card button:hover {
+    background:#f2f2f2;
+}
+
+.task_card span {
+    font-weight:500;
+    color:rgb(51,51,51);
+    font-weight:700;
+    font-size:20px;
+}

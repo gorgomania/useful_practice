@@ -4,6 +4,36 @@
         <h1>
             <%= @project.name %>
         </h1>
+        <% flash.each do |type, msg| %>
+            <div class = "project_success">
+                <%= msg %>
+            </div>
+        <% end %>
+        <%= link_to "Новая задача", new_project_task_path(@project), class: "new_task" %>
+        <%if @tasks != []%>
+            <div class="projects_list">
+                <% @tasks.each do |task| %>
+                    <div class="task_card" id = "card<%= task.id %>">
+                        <div class = "task_card_top">
+                            <h2 class = "task_name"><%= task.name%></h2>
+                            <div class = "task_card_top">
+                                <%= button_to edit_project_task_path(@project, task), method: :get do %>
+                                    <img src="http://localhost:3000/pencil.png" alt="Edit">
+                                <%end%>
+                                <%= button_to project_task_path(@project, task), method: :delete do %>
+                                    <img src="http://localhost:3000/trash.png" alt="Del">
+                                <%end%>
+                            </div>
+                        </div>
+                        <span>
+                            <%= task.status %>
+                        </span>
+                    </div>
+                <% end %>
+            </div>
+        <%else%>
+            <h2> В данном проекте задачи отсутствуют. </h2>
+        <%end%>
     </main>
     <%= render template: "layouts/footer"%>
 </body>

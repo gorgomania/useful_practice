@@ -15,7 +15,7 @@
             <div class="projects_list">
                 <% @projects.each do |project| %>
                     <div class="project_card" id = "card<%= project.id %>">
-                        <%= link_to project.name, "/projects/" + project.id.to_s(), class: "project_name" %>
+                        <%= link_to project.name, project_path(project), class: "project_name" %>
                         <% if project.goal %>
                             <h2> Цель </h2>
                             <span>
