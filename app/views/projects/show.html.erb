@@ -11,24 +11,28 @@
         <% end %>
         <%= link_to "Новая задача", new_project_task_path(@project), class: "new_task" %>
         <%if @tasks != []%>
-            <div class="projects_list">
+            <div class="tasks_list">
+                <% @statuses.each do |status|%>
+                    <span> <%= status %> </span>
+                <%end%>
                 <% @tasks.each do |task| %>
-                    <div class="task_card" id = "card<%= task.id %>">
-                        <div class = "task_card_top">
-                            <h2 class = "task_name"><%= task.name%></h2>
+                    <%if task %>
+                        <div class="task_card" id = "card<%= task.id %>">
                             <div class = "task_card_top">
-                                <%= button_to edit_project_task_path(@project, task), method: :get do %>
-                                    <img src="http://localhost:3000/pencil.png" alt="Edit">
-                                <%end%>
-                                <%= button_to project_task_path(@project, task), method: :delete do %>
-                                    <img src="http://localhost:3000/trash.png" alt="Del">
-                                <%end%>
+                                <h2 class = "task_name"><%= task.name%></h2>
+                                <div class = "task_card_top">
+                                    <%= button_to edit_project_task_path(@project, task), method: :get do %>
+                                        <img src="http://localhost:3000/pencil.png" alt="Edit">
+                                    <%end%>
+                                    <%= button_to project_task_path(@project, task), method: :delete do %>
+                                        <img src="http://localhost:3000/trash.png" alt="Del">
+                                    <%end%>
+                                </div>
                             </div>
                         </div>
-                        <span>
-                            <%= task.status %>
-                        </span>
-                    </div>
+                    <% else %>
+                        <div display = "none"> </div>
+                    <% end %>
                 <% end %>
             </div>
         <%else%>

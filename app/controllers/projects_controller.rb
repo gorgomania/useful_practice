@@ -31,8 +31,22 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    @statuses = [ "To Do", "In Progress", "In Testing", "Rejected", "Done" ]
     @project = Project.find(params[:id])
-    @tasks = @project.task
+    todo = @project.task.where("status = ?", "To Do")
+    inprogress = @project.task.where("status = ?", "In Progress")
+    intesting = @project.task.where("status = ?", "In Testing")
+    rejected = @project.task.where("status = ?", "Rejected")
+    done = @project.task.where("status = ?", "Done")
+    size = [ todo.size, inprogress.size, intesting.size, rejected.size, done.size ].max
+    @tasks = []
+    size.times do |i|
+      @tasks.push(todo[i])
+      @tasks.push(inprogress[i])
+      @tasks.push(intesting[i])
+      @tasks.push(rejected[i])
+      @tasks.push(done[i])
+    end
   end
 
   def project_params
