@@ -5,7 +5,6 @@ class TasksController < ApplicationController
 
   def update
     task = Task.find(params[:id])
-    old_status = task.status
     status = task_params[:status]
     name = task_params[:name]
     task.update(name: name, status: status)

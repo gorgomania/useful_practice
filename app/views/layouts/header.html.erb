@@ -1,5 +1,5 @@
 <header>
-    <div class="header" <%= "style = padding-right:90.675px" if @header_padding %>>
+    <div class="header">
         <%= link_to projects_path, class: "logo_link" do %>
             <img src="http://localhost:3000/logo.jpg" id = "logo_img" alt="Logo">
         <%end%>
@@ -10,15 +10,15 @@
             </button>
         </div>
         <div class="buttons">
-            <%= link_to new_project_path, class: "compare_link" do %>
+            <%= link_to new_project_path do %>
                 <img src="http://localhost:3000/create.png" alt="Create" class = "icon">
                 <span>Создать проект</span>
             <%end%>
-            <%= link_to projects_path, class: "compare_link" do %>
+            <%= link_to projects_path do %>
                 <img src="http://localhost:3000/projects.png" alt="Projects" class = "icon">
                 <span>Мои проекты</span>
             <%end%>
-            <%= link_to users_path, class: "auth_button" do%>
+            <%= link_to users_path do%>
                 <img src="http://localhost:3000/profile.png" alt="Profile" class = "icon">
                 <span>Профиль</span>
             <%end%>

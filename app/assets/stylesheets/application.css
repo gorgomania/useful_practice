@@ -35,7 +35,7 @@ main {
 
 .header {
     display:flex;
-    padding:16px 74px;
+    padding:16px 76px 16px 74px;
     justify-content: center;
     position:fixed;
     background:white;
@@ -57,18 +57,6 @@ main {
     align-items: center;
     border-radius:12px;
     width:120px;
-}
-
-.auth_button {
-    background:white;
-    padding:10px;
-    display:flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    border-radius:12px;
-    width:120px;
-    color: #4e4e4e;
 }
 
 .search_button {
@@ -101,11 +89,8 @@ button .icon {
     opacity: .9;
 }
 
-.auth_button .icon {
-    width:26px;
-}
-
 .icon {
+    min-width: 26px;
     height:26px;
 }
 
@@ -304,7 +289,7 @@ footer {
     margin-top:20px;
 }
 
-.user_container+footer, .fix_footer+footer {
+.fix_footer {
     position:absolute;
     bottom:0;
     right:0;
@@ -427,3 +412,38 @@ footer {
 .task_card button:hover {
     background:#f2f2f2;
 }
+
+.task_status_select {
+    margin-top:20px;
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 16px;
+    color: #333;
+    border:1px solid #e5e5e5;
+    border-radius: 8px;
+    appearance: none;
+    background-color: rgb(242, 242, 242);
+    background-image: url('http://localhost:3000/select.png' );
+    background-size: 12px;
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+}
+
+.task_status_select:hover {
+    background-color: rgb(232, 232, 232);
+    background-image: url('http://localhost:3000/select.png' );
+    background-size: 12px;
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+}
+
+/* Стилизация при фокусе */
+.task_status_select:focus {
+    background-color: white;
+    background-image: url('http://localhost:3000/select.png' );
+    background-size: 12px;
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+    box-shadow: 0 0 0 1px #0000000a, 0 4px 4px #0000000a, 0 20px 40px #00000014;
+}
+

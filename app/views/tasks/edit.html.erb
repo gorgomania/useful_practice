@@ -17,7 +17,7 @@
                 <%= f.text_field :name, class: "auth_input", autofocus: true, autocomplete: "name", value: @name%>
             </div>
 
-            <%= f.select :status, @options%>
+            <%= f.select :status, @options, {}, {class: "task_status_select"}%>
 
             <div class="actions">
                 <%= f.submit "Обновить", class:  "auth_press" %>
