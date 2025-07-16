@@ -45,7 +45,7 @@ main {
 .buttons {
     display:flex;
     align-items: flex-end;
-    margin-left:36px;
+    margin-left:40px;
 }
 
 .buttons a {
@@ -57,11 +57,6 @@ main {
     align-items: center;
     border-radius:12px;
     width:120px;
-}
-
-.search_button {
-    width:0;
-    height:0;
 }
 
 a .icon {
@@ -94,8 +89,17 @@ button .icon {
     height:26px;
 }
 
+.search_wrapper {
+    margin-left: 44px;
+    display:flex;
+}
+
+.search_button {
+    width:0;
+    height:0;
+}
+
 #search_input {
-    height:100%;
     padding: 24px 66px 24px 12px;
     border-radius:12px;
     border-width: 0px;
@@ -104,15 +108,13 @@ button .icon {
     outline:none;
 }
 
-.search_wrapper {
-    margin-left: 40px;
-}
-
 .search_img {
     position:relative;
     right:50px;
-    top: 10px;
+    top: 20px;
     border-radius: 12px;
+    width:26px;
+    height:26px;
 }
 
 .search_img:hover {

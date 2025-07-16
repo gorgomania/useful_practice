@@ -1,7 +1,7 @@
 <body>
     <%= render template: "layouts/header"%>
     <main class = "user_container">
-        <% if @search_query%>
+        <% if @search_query %>
             <h1> Результаты поиска </h1>
         <% else %>
             <h1> Мои проекты </h1>
@@ -33,7 +33,7 @@
             </div>
         <%else%>
             <% if @search_query%>
-                <h2> По результатам вашего запроса "<%=@value%>" ничего не найдено. </h2>
+                <h2> По результатам вашего запроса "<%=@search_query%>" ничего не найдено. </h2>
             <% else %>
                 <h2> У вас пока нет проектов. </h2>
             <% end %>

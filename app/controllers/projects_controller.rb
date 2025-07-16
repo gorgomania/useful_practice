@@ -1,7 +1,13 @@
 class ProjectsController < ApplicationController
   def index
-    @projects = current_user.project
-    @search_query = nil
+    if params[:projects] && project_params[:name] != ""
+      like_params = "%#{project_params[:name]}%"
+      @projects = current_user.project.where("name ILIKE ?", like_params)
+      @search_query = project_params[:name]
+    else
+      @projects = current_user.project
+      @search_query = nil
+    end
   end
 
   def create
