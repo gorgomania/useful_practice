@@ -3,6 +3,10 @@ class TasksController < ApplicationController
     @project_id = params[:project_id]
   end
 
+  def show
+    redirect_to project_path(params[:project_id])
+  end
+
   def update
     task = Task.find(params[:id])
     task.update(name: task_params[:name])

@@ -194,7 +194,7 @@ footer {
     color:rgb(252,88,8);
  }
 
-.auth_input {
+ .field .auth_input {
     width:256px;
     padding: 0 12px;
     border-radius:8px;
@@ -202,6 +202,19 @@ footer {
     height:64px;
     background: rgb(242, 242, 242);
     outline:none;
+}
+
+.field_with_errors .auth_input {
+    padding: 0 12px;
+    border: 1px solid #910a0a;
+    background: #e7a0a0;
+    border-radius: 8px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width:256px;
+    height:64px;
+    outline:none; 
 }
 
 .auth_input:hover {
@@ -332,6 +345,20 @@ footer {
     border: 1px solid #0a9130;
     color:  #0a9130;
     background: #a0e7b1;
+    border-radius: 8px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project_error {
+    margin-top:20px;
+    padding: 0 12px;
+    height:64px;
+    width:280px;
+    border: 1px solid #910a0a;
+    color:  #910a0a;
+    background: #e7a0a0;
     border-radius: 8px;
     display:flex;
     align-items: center;

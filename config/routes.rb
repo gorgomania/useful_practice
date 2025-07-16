@@ -16,4 +16,5 @@ Rails.application.routes.draw do
   resources :projects do
     resources :tasks
   end
+  match "*unmatched", to: "application#error_not_found", via: :all
 end

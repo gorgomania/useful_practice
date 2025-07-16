@@ -46,14 +46,24 @@ $(document).ready(function() {
     })
     //Прыжок label поля, если на него нажали
     $('.auth_input').focus(function() {
-        label = $(this).prev();
+        if ($(this).parent().attr("class") == "field") {
+            label = $(this).prev();
+        }
+        else {
+            label = $(this).parent().prev()
+        }
         label.animate({"top":22}, 250)
         label.css("font-size", "13px");
     })
     //Прыжок label поля, если его деактивировали
     $('.auth_input').blur(function() {
         if (!this.value) {
-            label = $(this).prev();
+            if ($(this).parent().attr("class") == "field") {
+                label = $(this).prev();
+            }
+            else {
+                label = $(this).parent().prev()
+            }
             label.animate({"top":42}, 250)
             label.css("font-size", "16px");
         }

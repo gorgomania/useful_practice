@@ -7,7 +7,7 @@
             <h1> Мои проекты </h1>
         <% end %>
         <% flash.each do |type, msg| %>
-            <div class = "project_success">
+            <div class = <%= type == "alert" ? :project_error : :project_success%>>
                 <%= msg %>
             </div>
         <% end %>
