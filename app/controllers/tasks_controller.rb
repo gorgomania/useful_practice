@@ -5,20 +5,20 @@ class TasksController < ApplicationController
 
   def update
     task = Task.find(params[:id])
-    status = task_params[:status]
-    name = task_params[:name]
-    task.update(name: name, status: status)
-    if task.save
+    task.update(name: task_params[:name])
+    if task.save && update_state(task, task_params[:state])
       redirect_to project_path(params[:project_id]), notice: "Задача успешно обновлена."
     else
       @project_id = params[:project_id]
-      @name = name
+      @name = task_params[:name]
       @task = task
-      @options = status_options(old_status)
-      if task.errors.messages[:name][0] == "has already been taken"
-         flash.now[:alert] = "Имя уже используется."
+      @options = status_options(task.state)
+      if task.errors.size == 0
+        flash.now[:alert] = "Недопустимое значение статуса."
+      elsif task.errors.messages[:name][0] == "has already been taken"
+        flash.now[:alert] = "Имя уже используется."
       else
-         flash.now[:alert] = "Имя не может быть пустым."
+        flash.now[:alert] = "Имя не может быть пустым."
       end
       render "edit"
     end
@@ -28,25 +28,22 @@ class TasksController < ApplicationController
     @project_id = params[:project_id]
     @task = Task.find(params[:id])
     @name = @task.name
-    @status = @task.status
-    @options = status_options(@status)
+    @state = @task[:state]
+    @options = status_options(@state)
   end
 
   def create
-    name = task_params[:name]
-    project_id = params[:project_id]
-    project = Project.find(project_id)
-    task = Task.new(project: project, name: name)
+    task = Task.new(project_id: params[:project_id], name: task_params[:name])
     if task.save
-      redirect_to project_path(project_id), notice: "Задача успешно создана."
+      redirect_to project_path(params[:project_id]), notice: "Задача успешно создана."
     else
       if task.errors.messages[:name][0] == "has already been taken"
         flash.now[:alert] = "Имя уже используется."
       else
         flash.now[:alert] = "Имя не может быть пустым."
       end
-      @name = name
-      @project_id = project_id
+      @name = task_params[:name]
+      @project_id = params[:project_id]
       render "new"
     end
   end
@@ -56,13 +53,32 @@ class TasksController < ApplicationController
     Task.delete(task_id)
     redirect_to project_path(project_id), notice: "Задача успешно удалена."
   end
-  def status_options(status)
-    case status
+  def update_state(task, state)
+    if task.state == state.split(" ").join()
+      return true
+    end
+    case state
     when "To Do"
-      [ "To Do", "In Progress" ]
+      task.todo
     when "In Progress"
-      [ "In Progress", "In Testing", "To Do" ]
+      task.inprogress
     when "In Testing"
+      task.intesting
+    when "Rejected"
+      task.rejected
+    when "Done"
+      task.done
+    else
+      false
+    end
+  end
+  def status_options(state)
+    case state
+    when "ToDo"
+      [ "To Do", "In Progress" ]
+    when "InProgress"
+      [ "In Progress", "In Testing", "To Do" ]
+    when "InTesting"
       [ "In Testing", "Done", "Rejected" ]
     when "Rejected"
       [ "Rejected", "In Progress" ]
@@ -71,6 +87,6 @@ class TasksController < ApplicationController
     end
   end
   def task_params
-    params.require(:tasks).permit(:name, :status)
+    params.require(:tasks).permit(:name, :state)
   end
 end

@@ -12,8 +12,8 @@
         <%= link_to "Новая задача", new_project_task_path(@project), class: "new_task" %>
         <%if @tasks != []%>
             <div class="tasks_list">
-                <% @statuses.each do |status|%>
-                    <span> <%= status %> </span>
+                <% @states.each do |state|%>
+                    <span> <%= state %> </span>
                 <%end%>
                 <% @tasks.each do |task| %>
                     <%if task %>
