@@ -15,21 +15,23 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_09_103006) do
   enable_extension "pg_catalog.plpgsql"
 
   create_table "projects", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.string "goal"
     t.string "description"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.string "state"
     t.bigint "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name", "project_id"], name: "index_tasks_on_name_and_project_id", unique: true
     t.index ["project_id"], name: "index_tasks_on_project_id"
   end
 

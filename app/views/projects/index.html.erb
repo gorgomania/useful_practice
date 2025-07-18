@@ -16,15 +16,15 @@
                 <% @projects.each do |project| %>
                     <div class="project_card" id = "card<%= project.id %>">
                         <%= link_to project.name, project_path(project), class: "project_name" %>
-                        <% if project.goal %>
+                        <% if project.goal && project.goal != "" %>
                             <h2> Цель </h2>
-                            <span>
+                            <span style="text-align:justify">
                                 <%= project.goal %>
                             </span>
                         <% end %>
-                        <% if project.description %>
+                        <% if project.description && project.description != "" %>
                             <h2> Описание </h2>
-                            <span>
+                            <span style="text-align:justify">
                                 <%= project.description %>
                             </span>
                         <% end %>
