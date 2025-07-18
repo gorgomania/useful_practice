@@ -283,6 +283,7 @@ footer {
     display:flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
 }
 
 /*user_styles*/
@@ -445,7 +446,7 @@ footer {
 .task_status_select {
     margin-top:20px;
     width: 100%;
-    padding: 12px 20px;
+    padding: 12px;
     font-size: 16px;
     color: #333;
     border:1px solid #e5e5e5;

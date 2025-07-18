@@ -49,8 +49,11 @@ $(document).ready(function() {
         if ($(this).parent().attr("class") == "field") {
             label = $(this).prev();
         }
-        else {
+        else if ($(this).parent().prev().attr("class") == "auth_label") {
             label = $(this).parent().prev()
+        }
+        else {
+            label = $(this).parent().prev().children()
         }
         label.animate({"top":22}, 250)
         label.css("font-size", "13px");
@@ -59,10 +62,13 @@ $(document).ready(function() {
     $('.auth_input').blur(function() {
         if (!this.value) {
             if ($(this).parent().attr("class") == "field") {
-                label = $(this).prev();
+            label = $(this).prev();
+            }
+            else if ($(this).parent().prev().attr("class") == "auth_label") {
+                label = $(this).parent().prev()
             }
             else {
-                label = $(this).parent().prev()
+                label = $(this).parent().prev().children()
             }
             label.animate({"top":42}, 250)
             label.css("font-size", "16px");

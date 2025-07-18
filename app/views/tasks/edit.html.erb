@@ -11,7 +11,7 @@
             </div>
           <% end %>
 
-          <%= form_for(:tasks, url: project_task_path(@project_id, @task), html: { method: :patch }) do |f| %>
+          <%= form_for(:tasks, url: project_task_path(@project, @task), html: { method: :patch }) do |f| %>
             <div class="field">
                 <%= f.label "Имя", class: "auth_label" %>
                 <%= f.text_field :name, class: "auth_input", autofocus: true, autocomplete: "name", value: @name%>
@@ -24,7 +24,7 @@
             </div>
           <% end %>
 
-          <%= link_to "Назад", project_path(@project_id), class: "auth_link" %>
+          <%= link_to "Назад", project_path(@project), class: "auth_link" %>
             
       </div>
   </div>
