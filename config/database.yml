@@ -1,18 +1,18 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: mini_project_database
+  database: useful_practice_development
   pool: 5
   host: localhost
-  username: postgres
+  username: gorgomania
   password: 4555008
 
 test:
   adapter: postgresql
   encoding: unicode
-  database: test
+  database: useful_practice_test
   pool: 5
-  username: postgres
+  username: gorgomania
   password: 4555008
 
 staging:

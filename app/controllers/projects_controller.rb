@@ -37,41 +37,37 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.find(params[:id])
-    if @project.user_id == current_user.id
-      tasks = @project.task
-      todo = []
-      inprogress = []
-      intesting = []
-      rejected = []
-      done = []
-      tasks.each do |task|
-      case task[:state]
-      when "ToDo"
-          todo.push(task)
-      when "InProgress"
-          inprogress.push(task)
-      when "InTesting"
-          intesting.push(task)
-      when "Rejected"
-          rejected.push(task)
-      else
-          done.push(task)
-      end
-      end
-      size = [ todo.size, inprogress.size, intesting.size, rejected.size, done.size ].max
-      @tasks = []
-      size.times do |i|
-        @tasks.push(todo[i])
-        @tasks.push(inprogress[i])
-        @tasks.push(intesting[i])
-        @tasks.push(rejected[i])
-        @tasks.push(done[i])
-      end
-      @states = [ "To Do", "In Progress", "In Testing", "Rejected", "Done" ]
+    @project = current_user.project.find(params[:id])
+    tasks = @project.task
+    todo = []
+    inprogress = []
+    intesting = []
+    rejected = []
+    done = []
+    tasks.each do |task|
+    case task[:state]
+    when "ToDo"
+        todo.push(task)
+    when "InProgress"
+        inprogress.push(task)
+    when "InTesting"
+        intesting.push(task)
+    when "Rejected"
+        rejected.push(task)
     else
-      redirect_to projects_path, alert: "В доступе отказано."
+        done.push(task)
     end
+    end
+    size = [ todo.size, inprogress.size, intesting.size, rejected.size, done.size ].max
+    @tasks = []
+    size.times do |i|
+      @tasks.push(todo[i])
+      @tasks.push(inprogress[i])
+      @tasks.push(intesting[i])
+      @tasks.push(rejected[i])
+      @tasks.push(done[i])
+    end
+    @states = [ "To Do", "In Progress", "In Testing", "Rejected", "Done" ]
   end
 
   def project_params

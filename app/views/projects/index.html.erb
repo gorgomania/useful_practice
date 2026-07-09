@@ -33,11 +33,10 @@
             </div>
         <%else%>
             <% if @search_query%>
-                <h2> По результатам вашего запроса "<%=@search_query%>" ничего не найдено. </h2>
+                <h2> По результатам поискового запроса "<%=@search_query%>" ничего не найдено. </h2>
             <% else %>
                 <h2> У вас пока нет проектов. </h2>
             <% end %>
         <%end%>
     </main>
-    <%= render template: "layouts/footer"%>
 </body>
