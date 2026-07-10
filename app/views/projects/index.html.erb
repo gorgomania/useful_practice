@@ -1,42 +1,53 @@
-<body>
-    <%= render template: "layouts/header"%>
-    <main class = "user_container">
-        <% if @search_query %>
-            <h1> Результаты поиска </h1>
-        <% else %>
-            <h1> Мои проекты </h1>
-        <% end %>
-        <% flash.each do |type, msg| %>
-            <div class = <%= type == "alert" ? :project_error : :project_success%>>
-                <%= msg %>
+<%= render template: "layouts/header"%>
+
+<main class = "mt-26 px-19 py-5">
+  <% if @search_query %>
+    <h1 class = "text-3xl font-bold text-[#333]"> Результаты поиска </h1>
+  <% else %>
+    <h1 class = "text-3xl font-bold text-[#333]"> Мои проекты </h1>
+  <% end %>
+
+  <% flash.each do |type, msg| %>
+    <div class = "mt-5 px-3 h-16 w-70 border rounded-lg flex items-center justify-center <%= type == "alert" ? "border-[#910a0a] text-[#910a0a] bg-[#e7a0a0]" : "border-[#0a9130] text-[#0a9130] bg-[#a0e7b1]" %> ">
+      <%= msg %>
+    </div>
+  <% end %>
+
+  <% if @projects != [] %>
+    <div class="mt-5 grid grid-cols-4 gap-[10px] text-[#333]">
+      <% @projects.each do |project| %>
+        <div class="flex flex-col p-5 rounded-xl bg-white gap-2">
+          <%= link_to project.name, project_path(project), class: "text-2xl font-bold hover:text-[#fc5808]" %>
+
+          <% if project.goal.present? %>
+            <div>
+              <h2 class = "text-[#fc5808] font-medium"> Цель </h2>
+
+              <span class="text-justify">
+                <%= project.goal %>
+              </span>
             </div>
-        <% end %>
-        <%if @projects != []%>
-            <div class="projects_list">
-                <% @projects.each do |project| %>
-                    <div class="project_card" id = "card<%= project.id %>">
-                        <%= link_to project.name, project_path(project), class: "project_name" %>
-                        <% if project.goal && project.goal != "" %>
-                            <h2> Цель </h2>
-                            <span style="text-align:justify">
-                                <%= project.goal %>
-                            </span>
-                        <% end %>
-                        <% if project.description && project.description != "" %>
-                            <h2> Описание </h2>
-                            <span style="text-align:justify">
-                                <%= project.description %>
-                            </span>
-                        <% end %>
-                    </div>
-                <% end %>
+          <% end %>
+
+          <% if project.description.present? %>
+            <div>
+              <h2 class = "text-[#fc5808] font-medium"> Описание </h2>
+
+              <span class = "text-justify">
+                <%= project.description %>
+              </span>
             </div>
-        <%else%>
-            <% if @search_query%>
-                <h2> По результатам поискового запроса "<%=@search_query%>" ничего не найдено. </h2>
-            <% else %>
-                <h2> У вас пока нет проектов. </h2>
-            <% end %>
-        <%end%>
-    </main>
-</body>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <%else%>
+    <div class = "mt-2 text-[#fc5808]">
+      <% if @search_query%>
+        <h2> По результатам поискового запроса "<%=@search_query%>" ничего не найдено. </h2>
+      <% else %>
+        <h2> У вас пока нет проектов. </h2>
+      <% end %>
+    </div>
+  <%end%>
+</main>

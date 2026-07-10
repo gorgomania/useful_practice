@@ -1,42 +1,44 @@
-<body>
-    <%= render template: "layouts/header"%>
-    <main class = "user_container">
-        <h1>
-            <%= @project.name %>
-        </h1>
-        <% flash.each do |type, msg| %>
-            <div class = "project_success">
-                <%= msg %>
+<%= render template: "layouts/header"%>
+
+<main class = "mt-26 px-19 py-5">
+  <h1 class = "text-3xl font-bold text-[#333]">
+    <%= @project.name %>
+  </h1>
+
+  <% flash.each do |type, msg| %>
+    <div class = "mt-5 px-3 h-16 w-70 border rounded-lg flex items-center justify-center border-[#0a9130] text-[#0a9130] bg-[#a0e7b1]">
+      <%= msg %>
+    </div>
+  <% end %>
+
+  <%= link_to "Новая задача", new_project_task_path(@project), class: "h-10 w-44 bg-gradient-to-t from-[#fc8507] to-[#ffa218] text-white font-bold rounded mt-5 flex items-center justify-center hover:opacity-90" %>
+    
+  <%if @tasks != []%>
+    <div class="mt-5 grid grid-cols-5 gap-[10px]">
+      <% @states.each do |state|%>
+        <span class = "text-center font-medium text-[#333] text-xl p-5 bg-white rounded-xl"> <%= state %> </span>
+      <%end%>
+
+      <% @tasks.each do |task| %>
+        <%if task %>
+          <div class="flex items-center justify-between bg-white rounded-xl px-5 py-3">
+            <h2 class = "text-left leading-[22px] text-2xl font-bold text-[#333]"><%= task.name%></h2>
+            <div class = "flex items-end gap-1">
+              <%= button_to edit_project_task_path(@project, task), method: :get, class: "cursor-pointer rounded-lg ml-1 p-2 bg-white hover:bg-[#f2f2f2]" do %>
+                <%= image_tag "/pencil.png", class: "h-6 w-6" %>
+              <%end%>
+
+              <%= button_to project_task_path(@project, task), method: :delete, class: "cursor-pointer rounded-lg ml-1 p-2 bg-white hover:bg-[#f2f2f2]" do %>
+                <%= image_tag "/trash.png", class: "h-6 w-6" %>
+              <%end%>
             </div>
+          </div>
+        <% else %>
+          <div class = "hidden"></div>
         <% end %>
-        <%= link_to "Новая задача", new_project_task_path(@project), class: "new_task" %>
-        <%if @tasks != []%>
-            <div class="tasks_list">
-                <% @states.each do |state|%>
-                    <span> <%= state %> </span>
-                <%end%>
-                <% @tasks.each do |task| %>
-                    <%if task %>
-                        <div class="task_card" id = "card<%= task.id %>">
-                            <div class = "task_card_top">
-                                <h2 class = "task_name"><%= task.name%></h2>
-                                <div class = "task_card_top">
-                                    <%= button_to edit_project_task_path(@project, task), method: :get do %>
-                                        <img src="http://localhost:3000/pencil.png" alt="Edit">
-                                    <%end%>
-                                    <%= button_to project_task_path(@project, task), method: :delete do %>
-                                        <img src="http://localhost:3000/trash.png" alt="Del">
-                                    <%end%>
-                                </div>
-                            </div>
-                        </div>
-                    <% else %>
-                        <div display = "none"> </div>
-                    <% end %>
-                <% end %>
-            </div>
-        <%else%>
-            <h2> В данном проекте задачи отсутствуют. </h2>
-        <%end%>
-    </main>
-</body>
+      <% end %>
+    </div>
+  <%else%>
+    <h2 class = "mt-2 text-[#fc5808]"> В данном проекте задачи отсутствуют. </h2>
+  <%end%>
+</main>

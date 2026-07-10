@@ -34,7 +34,7 @@ document.addEventListener("turbo:load", function() {
         }
     })
     //Эффект для поля поиска хедера
-    $('.search_img').mouseenter(function () {
+    $('#search_img').mouseenter(function () {
         $('#search_input').css("background", 'white')
         $('#search_input').css("box-shadow", '0 0 0 1px #0000000a,0 4px 4px #0000000a,0 20px 40px #00000014')
     })
@@ -80,7 +80,7 @@ document.addEventListener("turbo:load", function() {
         }
     })
     //Обработка нажатий на label чекбокса, перевод состояний соответствующего чекбокса
-    $('.auth_checkbox_label').click(function() {
+    $('#auth_checkbox_label').click(function() {
         let checkbox = $(this).prev();
         if (checkbox.prop("checked")) {
             checkbox.prop('checked', false);

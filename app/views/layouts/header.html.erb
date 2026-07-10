@@ -1,29 +1,32 @@
-<header>
-    <div class="header">
-        <%= link_to projects_path, class: "logo_link" do %>
-            <img src="http://localhost:3000/logo.jpg" id = "logo_img" alt="Logo">
-        <%end%>
-        <%= form_for(:projects, url: :projects, html: { method: :get }, class: "search_wrapper") do |f| %>
-          <div class="field">
-            <%= f.text_field :name, id: "search_input", autofocus: true, autocomplete: "name", value: @search_query, placeholder: "Поиск проектов" %>
-          </div>
-          <div class="actions search_button">
-            <%= f.submit "Поиск", :type => :image, :src => "http://localhost:3000/search.png", class: "search_img" %>
-          </div>
-        <% end %>
-        <div class="buttons">
-            <%= link_to new_project_path do %>
-                <img src="http://localhost:3000/create.png" alt="Create" class = "icon">
-                <span>Создать проект</span>
-            <%end%>
-            <%= link_to projects_path do %>
-                <img src="http://localhost:3000/projects.png" alt="Projects" class = "icon">
-                <span>Мои проекты</span>
-            <%end%>
-            <%= link_to users_path do%>
-                <img src="http://localhost:3000/profile.png" alt="Profile" class = "icon">
-                <span>Профиль</span>
-            <%end%>
-        </div>
+<header class="flex px-19 py-4 items-center fixed w-full bg-white top-0">
+  <%= link_to projects_path, class: "w-45 hover:opacity-90" do %>
+    <%= image_tag "/logo.png" %>
+  <%end%>
+
+  <%= form_for(:projects, url: :projects, html: { method: :get }, class: "flex ml-12") do |f| %>
+    <div class="field">
+      <%= f.text_field :name, id: "search_input", class: "py-6 pl-3 pr-16 rounded-xl bg-[#f2f2f2] w-135 outline-none", autofocus: true, autocomplete: "name", value: @search_query, placeholder: "Поиск проектов" %>
     </div>
+
+    <div class="actions w-0 h-0">
+      <%= image_submit_tag("/search.png", name: "commit", id: "search_img", class: "relative right-12 top-5.5 rounded-xl w-7 h-7 hover:bg-[#f2f2f2] hover:shadow-[0_0_0_10px_#f2f2f2]", title: "Поиск") %>
+    </div>
+  <% end %>
+
+  <div class="flex items-end ml-12">
+    <%= link_to new_project_path, class: "p-2 flex flex-col justify-between items-center rounded-xl w-35 text-[#4e4e4e] hover:bg-[#f2f2f2]" do %>
+      <%= image_tag "/create.png", class: "min-w-7 h-7 mb-1" %>
+      <span>Создать проект</span>
+    <%end%>
+
+    <%= link_to projects_path, class: "ml-1 p-2 flex flex-col justify-between items-center rounded-xl w-35 text-[#4e4e4e] hover:bg-[#f2f2f2]" do %>
+      <%= image_tag "/projects.png", class: "min-w-7 h-7 mb-1" %>
+      <span>Мои проекты</span>
+    <%end%>
+
+    <%= link_to users_path, class: "ml-1 p-2 flex flex-col justify-between items-center rounded-xl w-35 text-[#4e4e4e] hover:bg-[#f2f2f2]" do%>
+      <%= image_tag "/profile.png", class: "min-w-7 h-7 mb-1" %>
+      <span>Профиль</span>
+    <%end%>
+  </div>
 </header>
