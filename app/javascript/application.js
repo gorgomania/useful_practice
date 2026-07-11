@@ -3,30 +3,6 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import "jquery"
 
-// Прыжок label при focus
-$(document).on("focus.auth", ".auth_input", function() {
-  moveLabel($(this), 1);
-});
-
-// Прыжок label при blur
-$(document).on("blur.auth", ".auth_input", function() {
-  if (!this.value) {
-    moveLabel($(this), 0);
-  }
-});
-
-// Событие input - при вводе
-$(document).on("input.auth", ".auth_input", function() {
-  const hasFocus = $(this).is(":focus");
-
-  if (!this.value && !hasFocus) {
-    moveLabel($(this), 0);
-  }
-  else if (this.value) {
-    moveLabel($(this), 1);
-  }
-});
-
 document.addEventListener("turbo:load", function() {
     var input_focus = 1, input_hover = 1;
     
@@ -79,21 +55,3 @@ document.addEventListener("turbo:load", function() {
         }
     })
 })
-
-function moveLabel($input, move) {
-    let $label;
-    if ($input.parent().hasClass("field")) {
-        $label = $input.prev();
-    } else if ($input.parent().prev().hasClass("auth_label")) {
-        $label = $input.parent().prev();
-    } else {
-        $label = $input.parent().prev().children();
-    }
-
-    if (!move) {
-        $label.animate({ "top": "42px" }, 200).css("font-size", "16px");
-    }
-    else {
-        $label.animate({ "top": "22px" }, 200).css("font-size", "13px");
-    }
-}

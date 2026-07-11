@@ -1,0 +1,18 @@
+<%# app/views/shared/_floating_field.html.erb %>
+<% type ||= :text_field %>
+<% label_text ||= nil %>
+<% options ||= {} %>
+
+<div class="field relative">
+  <%= f.public_send(type, attribute, {
+        placeholder: " ",
+        class: "peer w-full px-3 rounded-lg border border-[#e5e5e5] h-16 bg-[#f2f2f2] outline-none hover:bg-[#e8e8e8] focus:bg-white focus:shadow-[0_0_0_1px_#0000000a,0_4px_4px_#0000000a,0_20px_40px_#00000014]"
+      }.merge(options)) %>
+
+  <%= f.label attribute, label_text,
+      class: "absolute top-[21px] left-[13px] text-[#8c8c8c] pointer-events-none leading-4 text-base
+              transition-all duration-200
+              peer-focus:top-[8px] peer-focus:text-[13px]
+              peer-[:not(:placeholder-shown)]:top-[8px]
+              peer-[:not(:placeholder-shown)]:text-[13px]" %>
+</div>
