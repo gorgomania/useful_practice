@@ -3,14 +3,40 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import "jquery"
 
+// Прыжок label при focus
+$(document).on("focus.auth", ".auth_input", function() {
+  moveLabel($(this), 1);
+});
+
+// Прыжок label при blur
+$(document).on("blur.auth", ".auth_input", function() {
+  if (!this.value) {
+    moveLabel($(this), 0);
+  }
+});
+
+// Событие input - при вводе
+$(document).on("input.auth", ".auth_input", function() {
+  const hasFocus = $(this).is(":focus");
+
+  if (!this.value && !hasFocus) {
+    moveLabel($(this), 0);
+  }
+  else if (this.value) {
+    moveLabel($(this), 1);
+  }
+});
+
 document.addEventListener("turbo:load", function() {
     var input_focus = 1, input_hover = 1;
+    
     //Эффект для поля поиска хедера
     $('#search_input').focus(function () {
         $('#search_input').css("background", 'white')
         $('#search_input').css("box-shadow", '0 0 0 1px #0000000a,0 4px 4px #0000000a,0 20px 40px #00000014')
         input_focus = 0
     })
+
     //Эффект для поля поиска хедера
     $('#search_input').blur(function () {
         input_focus = 1
@@ -19,12 +45,14 @@ document.addEventListener("turbo:load", function() {
             $('#search_input').css("box-shadow", 'none')
         }
     })
+
     //Эффект для поля поиска хедера
     $('#search_input').mouseenter(function () {
         $('#search_input').css("background", 'white')
         $('#search_input').css("box-shadow", '0 0 0 1px #0000000a,0 4px 4px #0000000a,0 20px 40px #00000014')
         input_hover = 0
     })
+
     //Эффект для поля поиска хедера
     $('#search_input').mouseleave(function () {
         input_hover = 1
@@ -33,52 +61,13 @@ document.addEventListener("turbo:load", function() {
             $('#search_input').css("box-shadow", 'none')
         }
     })
+
     //Эффект для поля поиска хедера
     $('#search_img').mouseenter(function () {
         $('#search_input').css("background", 'white')
         $('#search_input').css("box-shadow", '0 0 0 1px #0000000a,0 4px 4px #0000000a,0 20px 40px #00000014')
     })
 
-    //Прыжок label поля перед рендером, если в нём имеется текст
-    $('.auth_input').each(function() {
-        if (this.value) {
-            let label = $(this).prev();
-            label.css("font-size", "13px");
-            label.css("top", "22px");
-        }
-    })
-    //Прыжок label поля, если на него нажали
-    $('.auth_input').focus(function() {
-        let label;
-        if ($(this).parent().attr("class") == "field") {
-            label = $(this).prev();
-        }
-        else if ($(this).parent().prev().attr("class") == "auth_label") {
-            label = $(this).parent().prev()
-        }
-        else {
-            label = $(this).parent().prev().children()
-        }
-        label.animate({"top":22}, 250)
-        label.css("font-size", "13px");
-    })
-    //Прыжок label поля, если его деактивировали
-    $('.auth_input').blur(function() {
-        if (!this.value) {
-            let label;
-            if ($(this).parent().attr("class") == "field") {
-            label = $(this).prev();
-            }
-            else if ($(this).parent().prev().attr("class") == "auth_label") {
-                label = $(this).parent().prev()
-            }
-            else {
-                label = $(this).parent().prev().children()
-            }
-            label.animate({"top":42}, 250)
-            label.css("font-size", "16px");
-        }
-    })
     //Обработка нажатий на label чекбокса, перевод состояний соответствующего чекбокса
     $('#auth_checkbox_label').click(function() {
         let checkbox = $(this).prev();
@@ -90,3 +79,21 @@ document.addEventListener("turbo:load", function() {
         }
     })
 })
+
+function moveLabel($input, move) {
+    let $label;
+    if ($input.parent().hasClass("field")) {
+        $label = $input.prev();
+    } else if ($input.parent().prev().hasClass("auth_label")) {
+        $label = $input.parent().prev();
+    } else {
+        $label = $input.parent().prev().children();
+    }
+
+    if (!move) {
+        $label.animate({ "top": "42px" }, 200).css("font-size", "16px");
+    }
+    else {
+        $label.animate({ "top": "22px" }, 200).css("font-size", "13px");
+    }
+}

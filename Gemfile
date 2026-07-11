@@ -18,6 +18,7 @@ gem "stimulus-rails"
 gem "jbuilder"
 # Use devise for authentication
 gem "devise", "~> 4.9"
+gem "devise-i18n"
 # Rails State Machine is a ActiveRecord-bound state machine.
 gem "state_machines"
 gem "state_machines-activerecord"
