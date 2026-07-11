@@ -3,13 +3,26 @@
     <%= image_tag "/logo.png" %>
   <%end%>
 
-  <%= form_for(:projects, url: :projects, html: { method: :get }, class: "flex ml-12") do |f| %>
+  <%= form_for(:projects, url: :projects, html: { method: :get, class: "group flex ml-12" }) do |f| %>
     <div class="field">
-      <%= f.text_field :name, id: "search_input", class: "py-6 pl-3 pr-16 rounded-xl bg-[#f2f2f2] w-135 outline-none", autofocus: true, autocomplete: "name", value: @search_query, placeholder: "Поиск проектов" %>
+      <%= f.text_field :name,
+          id: "search_input",
+          autofocus: true,
+          autocomplete: "name",
+          value: @search_query,
+          placeholder: "Поиск проектов",
+          class: "py-6 pl-3 pr-16 rounded-xl bg-[#f2f2f2] w-135 outline-none
+                  transition-all duration-150
+                  group-hover:bg-white group-hover:shadow-[0_0_0_1px_#0000000a,0_4px_4px_#0000000a,0_20px_40px_#00000014]
+                  focus:bg-white focus:shadow-[0_0_0_1px_#0000000a,0_4px_4px_#0000000a,0_20px_40px_#00000014]" %>
     </div>
 
     <div class="actions w-0 h-0">
-      <%= image_submit_tag("/search.png", name: "commit", id: "search_img", class: "relative right-12 top-5.5 rounded-xl w-7 h-7 hover:bg-[#f2f2f2] hover:shadow-[0_0_0_10px_#f2f2f2]", title: "Поиск") %>
+      <%= image_submit_tag("/search.png",
+          name: "commit",
+          id: "search_img",
+          title: "Поиск",
+          class: "relative right-12 top-5.5 rounded-xl w-7 h-7 hover:bg-[#f2f2f2] hover:shadow-[0_0_0_10px_#f2f2f2]") %>
     </div>
   <% end %>
 
