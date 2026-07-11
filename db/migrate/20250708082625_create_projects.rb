@@ -4,7 +4,7 @@ class CreateProjects < ActiveRecord::Migration[8.0]
       t.string :name, null: false
       t.string :goal
       t.string :description
-      t.references :user
+      t.references :user, null: false, foreign_key: { on_delete: :cascade }
       t.index [ :name, :user_id ], unique: true
       t.timestamps
     end

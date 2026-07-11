@@ -18,7 +18,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_09_103006) do
     t.string "name", null: false
     t.string "goal"
     t.string "description"
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name", "user_id"], name: "index_projects_on_name_and_user_id", unique: true
@@ -27,8 +27,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_09_103006) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "name", null: false
-    t.string "state"
-    t.bigint "project_id"
+    t.string "state", null: false
+    t.bigint "project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name", "project_id"], name: "index_tasks_on_name_and_project_id", unique: true
@@ -38,12 +38,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_09_103006) do
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "projects", "users", on_delete: :cascade
+  add_foreign_key "tasks", "projects", on_delete: :cascade
 end

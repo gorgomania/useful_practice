@@ -1,17 +1,19 @@
 <%= render template: "layouts/header"%>
 
 <main class = "mt-26 px-19 py-5">
-  <% if @search_query %>
-    <h1 class = "text-3xl font-bold text-[#333]"> Результаты поиска </h1>
-  <% else %>
-    <h1 class = "text-3xl font-bold text-[#333]"> Мои проекты </h1>
-  <% end %>
+  <div class = "flex gap-5">
+    <% if @search_query %>
+      <h1 class = "text-3xl font-bold text-[#333]"> Результаты поиска </h1>
+    <% else %>
+      <h1 class = "text-3xl font-bold text-[#333]"> Мои проекты </h1>
+    <% end %>
 
-  <% flash.each do |type, msg| %>
-    <div class = "mt-5 px-3 h-16 w-70 border rounded-lg flex items-center justify-center <%= type == "alert" ? "border-[#910a0a] text-[#910a0a] bg-[#e7a0a0]" : "border-[#0a9130] text-[#0a9130] bg-[#a0e7b1]" %> ">
-      <%= msg %>
-    </div>
-  <% end %>
+    <% flash.each do |type, msg| %>
+      <div class = "px-3 h-9 border rounded-lg flex items-center justify-center <%= type == "alert" ? "border-[#910a0a] text-[#910a0a] bg-[#e7a0a0]" : "border-[#0a9130] text-[#0a9130] bg-[#a0e7b1]" %> ">
+        <%= msg %>
+      </div>
+    <% end %>
+  </div>
 
   <% if @projects != [] %>
     <div class="mt-5 grid grid-cols-4 gap-[10px] text-[#333]">
@@ -19,25 +21,29 @@
         <div class="flex flex-col p-5 rounded-xl bg-white gap-2">
           <%= link_to project.name, project_path(project), class: "text-2xl font-bold hover:text-[#fc5808]" %>
 
-          <% if project.goal.present? %>
-            <div>
-              <h2 class = "text-[#fc5808] font-medium"> Цель </h2>
-
-              <span class="text-justify">
+          <div>
+            <h2 class = "text-[#fc5808] font-medium"> Цель </h2>
+            
+            <span class="text-justify">
+              <% if project.goal.present? %>
                 <%= project.goal %>
-              </span>
-            </div>
-          <% end %>
+              <% else %>
+                <%= "---" %>
+              <% end %>
+            </span>
+          </div>
 
-          <% if project.description.present? %>
-            <div>
-              <h2 class = "text-[#fc5808] font-medium"> Описание </h2>
+          <div>
+            <h2 class = "text-[#fc5808] font-medium"> Описание </h2>
 
-              <span class = "text-justify">
+            <span class = "text-justify">
+              <% if project.description.present? %>
                 <%= project.description %>
-              </span>
-            </div>
-          <% end %>
+              <% else %>
+                <%= "---" %>
+              <% end %>
+            </span>
+          </div>
         </div>
       <% end %>
     </div>
