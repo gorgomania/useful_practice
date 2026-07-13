@@ -31,9 +31,6 @@ cd useful_practice
 
 bundle install
 
-cp config/database.yml.example config/database.yml
-# указать данные подключения к БД
-
 bin/rails db:create db:migrate
 
 bin/dev
