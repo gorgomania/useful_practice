@@ -24,9 +24,7 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @name = @task.name
-    @state = @task[:state]
-    @options = status_options(@state)
+    @options = status_options(@task.state)
   end
 
   def update

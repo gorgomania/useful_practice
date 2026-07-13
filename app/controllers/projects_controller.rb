@@ -1,9 +1,9 @@
 class ProjectsController < ApplicationController
   def index
-    if params[:projects] && project_params[:name] != ""
-      like_params = "%#{project_params[:name]}%"
-      @projects = policy_scope(Project).where("name ILIKE ?", like_params)
-      @search_query = project_params[:name]
+    search = params.dig(:projects, :name)
+    if search.present?
+      @projects = policy_scope(Project).where("name ILIKE ?", "%#{search}%")
+      @search_query = search
     else
       @projects = policy_scope(Project)
       @search_query = nil
@@ -30,37 +30,8 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     authorize @project
 
-    tasks = @project.tasks
-    todo = []
-    inprogress = []
-    intesting = []
-    rejected = []
-    done = []
-    tasks.each do |task|
-      case task[:state]
-      when "ToDo"
-        todo.push(task)
-      when "InProgress"
-        inprogress.push(task)
-      when "InTesting"
-        intesting.push(task)
-      when "Rejected"
-        rejected.push(task)
-      else
-        done.push(task)
-      end
-    end
-
-    size = [ todo.size, inprogress.size, intesting.size, rejected.size, done.size ].max
-    @tasks = []
-    size.times do |i|
-      @tasks.push(todo[i])
-      @tasks.push(inprogress[i])
-      @tasks.push(intesting[i])
-      @tasks.push(rejected[i])
-      @tasks.push(done[i])
-    end
-    @states = [ "To Do", "In Progress", "In Testing", "Rejected", "Done" ]
+    @tasks = @project.tasks_by_state
+    @states = Project::STATES
   end
 
   def edit

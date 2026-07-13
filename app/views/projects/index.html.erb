@@ -8,14 +8,10 @@
       <h1 class = "text-3xl font-bold text-[#333]"> Мои проекты </h1>
     <% end %>
 
-    <% flash.each do |type, msg| %>
-      <div class = "px-3 h-9 border rounded-lg flex items-center justify-center <%= type == "alert" ? "border-[#910a0a] text-[#910a0a] bg-[#e7a0a0]" : "border-[#0a9130] text-[#0a9130] bg-[#a0e7b1]" %> ">
-        <%= msg %>
-      </div>
-    <% end %>
+    <%= render "shared/flash", height: "h-9" %>
   </div>
 
-  <% if @projects != [] %>
+  <% if @projects.any? %>
     <div class="mt-5 grid grid-cols-4 gap-[10px] text-[#333]">
       <% @projects.each do |project| %>
         <div class="flex flex-col p-3 rounded-xl bg-white">

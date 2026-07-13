@@ -6,16 +6,12 @@
       <%= @project.name %>
     </h1>
 
-    <% flash.each do |type, msg| %>
-      <div class = "px-3 h-9 border rounded-lg flex items-center justify-center <%= type == "alert" ? "border-[#910a0a] text-[#910a0a] bg-[#e7a0a0]" : "border-[#0a9130] text-[#0a9130] bg-[#a0e7b1]" %>">
-        <%= msg %>
-      </div>
-    <% end %>
+    <%= render "shared/flash", height: "h-9" %>
   </div>
 
   <%= link_to "Новая задача", new_project_task_path(@project), class: "h-10 w-44 bg-gradient-to-t from-[#fc8507] to-[#ffa218] text-white font-bold rounded mt-5 flex items-center justify-center hover:opacity-90" %>
     
-  <%if @tasks != []%>
+  <%if @tasks.any?%>
     <div class="mt-5 grid grid-cols-5 gap-[10px] text-[#333]">
       <% @states.each do |state|%>
         <h2 class = "text-center font-bold text-xl p-5 bg-white rounded-xl"> <%= state %> </h2>
