@@ -1,4 +1,6 @@
 class ProjectsController < ApplicationController
+  before_action :set_project, only: [ :show, :edit, :update, :destroy ]
+
   def index
     search = params.dig(:projects, :name)
     if search.present?
@@ -27,21 +29,14 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.find(params[:id])
-    authorize @project
-
     @tasks = @project.tasks_by_state
     @states = Project::STATES
   end
 
   def edit
-    @project = Project.find(params[:id])
-    authorize @project
   end
 
   def update
-    @project = Project.find(params[:id])
-    authorize @project
     if @project.update(project_params)
       redirect_to projects_path, notice: "Проект успешно обновлен."
     else
@@ -51,13 +46,16 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    project = Project.find(params[:id])
-    authorize project
-    project.destroy
+    @project.destroy
     redirect_to projects_path, notice: "Проект успешно удалён."
   end
 
   private
+
+  def set_project
+    @project = Project.find(params[:id])
+    authorize @project
+  end
 
   def project_params
     params.require(:projects).permit(:name, :goal, :description)

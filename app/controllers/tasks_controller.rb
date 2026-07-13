@@ -7,7 +7,8 @@ class TasksController < ApplicationController
   end
 
   def new
-    authorize @project.tasks.new
+    @task = @project.tasks.new
+    authorize @task
   end
 
   def create
@@ -17,7 +18,6 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to project_path(@project), notice: "Задача успешно создана."
     else
-      @name = task_params[:name]
       flash.now[:alert] = @task.errors.full_messages.to_sentence
       render :new, status: :unprocessable_entity
     end
@@ -28,7 +28,13 @@ class TasksController < ApplicationController
   end
 
   def update
-    if @task.update(name: task_params[:name]) && update_state(@task, task_params[:state])
+    success = ActiveRecord::Base.transaction do
+      raise ActiveRecord::Rollback unless @task.update(name: task_params[:name])
+      raise ActiveRecord::Rollback unless update_state(@task, task_params[:state])
+      true
+    end
+
+    if success
       redirect_to project_path(@project), notice: "Задача успешно обновлена."
     else
       @options = status_options(@task.state)
@@ -58,7 +64,7 @@ class TasksController < ApplicationController
   end
 
   def update_state(task, state)
-    if state && task.state == state.split(" ").join()
+    if state && task.state == state.delete(" ")
       return true
     end
     case state

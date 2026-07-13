@@ -31,25 +31,13 @@
             <div>
               <h2 class = "text-[#fc5808] font-medium"> Цель </h2>
               
-              <span class="text-justify">
-                <% if project.goal.present? %>
-                  <%= project.goal %>
-                <% else %>
-                  <%= "---" %>
-                <% end %>
-              </span>
+              <span class="text-justify"><%= project.goal.presence || "---" %></span>
             </div>
 
             <div>
               <h2 class = "text-[#fc5808] font-medium"> Описание </h2>
 
-              <span class = "text-justify">
-                <% if project.description.present? %>
-                  <%= project.description %>
-                <% else %>
-                  <%= "---" %>
-                <% end %>
-              </span>
+              <span class="text-justify"><%= project.description.presence || "---" %></span>
             </div>
           </div>
         </div>
