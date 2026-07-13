@@ -1,0 +1,10 @@
+ru:
+  activerecord:
+    attributes:
+      project:
+        name: "Имя"
+        goal: "Цель"
+        description: "Описание"
+      task:
+        name: "Имя"
+        state: "Статус"

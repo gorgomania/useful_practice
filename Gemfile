@@ -19,10 +19,13 @@ gem "jbuilder"
 # Use devise for authentication
 gem "devise", "~> 4.9"
 gem "devise-i18n"
+gem "rails-i18n"
+
 # Rails State Machine is a ActiveRecord-bound state machine.
 gem "state_machines"
 gem "state_machines-activerecord"
 gem "tailwindcss-rails"
+gem "pundit"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"

@@ -2,31 +2,11 @@ class ProjectsController < ApplicationController
   def index
     if params[:projects] && project_params[:name] != ""
       like_params = "%#{project_params[:name]}%"
-      @projects = current_user.project.where("name ILIKE ?", like_params)
+      @projects = policy_scope(Project).where("name ILIKE ?", like_params)
       @search_query = project_params[:name]
     else
-      @projects = current_user.project
+      @projects = policy_scope(Project)
       @search_query = nil
-    end
-  end
-
-  def create
-    name = project_params[:name]
-    goal = project_params[:goal]
-    description = project_params[:description]
-    project = Project.new(user: current_user, name: name, goal: goal, description: description)
-    if project.save
-      redirect_to projects_path, notice: "Проект успешно создан."
-    else
-      if project.errors.messages[:name][0] == "has already been taken"
-        flash.now[:alert] = "Имя уже используется."
-      else
-        flash.now[:alert] = "Имя не может быть пустым."
-      end
-      @name = name
-      @goal = goal
-      @description = description
-      render "new"
     end
   end
 
@@ -36,8 +16,22 @@ class ProjectsController < ApplicationController
     @description = nil
   end
 
+  def create
+    @project = Project.new(project_params.merge(user: current_user))
+    authorize @project
+
+    if @project.save
+      redirect_to projects_path, notice: "Проект успешно создан"
+    else
+      flash.now[:alert] = @project.errors.full_messages.to_sentence
+      render :new, status: :unprocessable_entity
+    end
+  end
+
   def show
-    @project = current_user.project.find(params[:id])
+    @project = Project.find(params[:id])
+    authorize @project
+
     tasks = @project.task
     todo = []
     inprogress = []
@@ -45,18 +39,18 @@ class ProjectsController < ApplicationController
     rejected = []
     done = []
     tasks.each do |task|
-    case task[:state]
-    when "ToDo"
+      case task[:state]
+      when "ToDo"
         todo.push(task)
-    when "InProgress"
+      when "InProgress"
         inprogress.push(task)
-    when "InTesting"
+      when "InTesting"
         intesting.push(task)
-    when "Rejected"
+      when "Rejected"
         rejected.push(task)
-    else
+      else
         done.push(task)
-    end
+      end
     end
     size = [ todo.size, inprogress.size, intesting.size, rejected.size, done.size ].max
     @tasks = []
@@ -69,6 +63,8 @@ class ProjectsController < ApplicationController
     end
     @states = [ "To Do", "In Progress", "In Testing", "Rejected", "Done" ]
   end
+
+  private
 
   def project_params
     params.require(:projects).permit(:name, :goal, :description)

@@ -1,64 +1,62 @@
 class TasksController < ApplicationController
+  before_action :set_project
+  before_action :set_task, only: [ :show, :edit, :update, :destroy ]
+
   def new
-    @project = Project.find(params[:project_id])
   end
 
   def show
-    redirect_to project_path(params[:project_id])
+    redirect_to project_path(@project)
   end
 
   def create
-    @project = Project.find(params[:project_id])
-    task = Task.new(project_id: params[:project_id], name: task_params[:name])
-    if task.save
-      redirect_to project_path(params[:project_id]), notice: "Задача успешно создана."
+    @task = @project.task.new(task_params)
+    authorize @task
+
+    if @task.save
+      redirect_to project_path(@project), notice: "Задача успешно создана"
     else
-      if task.errors.messages[:name][0] == "has already been taken"
-        flash.now[:alert] = "Имя уже используется."
-      else
-        flash.now[:alert] = "Имя не может быть пустым."
-      end
-      @name = task_params[:name]
-      @project = params[:project_id]
-      render "new"
+      flash.now[:alert] = @task.errors.full_messages.to_sentence
+      render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    @project = Project.find(params[:project_id])
-    @task = Task.find(params[:id])
     @name = @task.name
     @state = @task[:state]
     @options = status_options(@state)
   end
 
   def update
-    @project = Project.find(params[:project_id])
-    task = Task.find(params[:id])
-    task.update(name: task_params[:name])
-    if task.save && update_state(task, task_params[:state])
-      redirect_to project_path(params[:project_id]), notice: "Задача успешно обновлена."
+    if @task.update(name: task_params[:name]) && update_state(@task, task_params[:state])
+      redirect_to project_path(@project), notice: "Задача успешно обновлена"
     else
-      @name = task_params[:name]
-      @task = task
-      @options = status_options(task.state)
-      if task.errors.size == 0
-        flash.now[:alert] = "Недопустимое значение статуса."
-      elsif task.errors.messages[:name][0] == "has already been taken"
-        flash.now[:alert] = "Имя уже используется."
+      @options = status_options(@task.state)
+      flash.now[:alert] = if @task.errors.any?
+        @task.errors.full_messages.to_sentence
       else
-        flash.now[:alert] = "Имя не может быть пустым."
+        "Недопустимое значение статуса"
       end
-      render "edit"
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    task_id = params[:id]
-    project = Project.find(params[:project_id])
-    Task.delete(task_id)
-    redirect_to project_path(project.id), notice: "Задача успешно удалена."
+    @task.destroy
+    redirect_to project_path(@project), notice: "Задача успешно удалена"
   end
+
+  private
+
+  def set_project
+    @project = policy_scope(Project).find(params[:project_id])
+  end
+
+  def set_task
+    @task = @project.task.find(params[:id])
+    authorize @task
+  end
+
   def update_state(task, state)
     if state && task.state == state.split(" ").join()
       return true
@@ -78,6 +76,7 @@ class TasksController < ApplicationController
       false
     end
   end
+
   def status_options(state)
     case state
     when "ToDo"
@@ -92,6 +91,7 @@ class TasksController < ApplicationController
       [ "Done" ]
     end
   end
+
   def task_params
     params.require(:tasks).permit(:name, :state)
   end
