@@ -11,9 +11,7 @@ class ProjectsController < ApplicationController
   end
 
   def new
-    @name = nil
-    @goal = nil
-    @description = nil
+    @project = Project.new
   end
 
   def create
@@ -21,11 +19,8 @@ class ProjectsController < ApplicationController
     authorize @project
 
     if @project.save
-      redirect_to projects_path, notice: "Проект успешно создан"
+      redirect_to projects_path, notice: "Проект успешно создан."
     else
-      @name = project_params[:name]
-      @goal = project_params[:goal]
-      @description = project_params[:description]
       flash.now[:alert] = @project.errors.full_messages.to_sentence
       render :new, status: :unprocessable_entity
     end
@@ -55,6 +50,7 @@ class ProjectsController < ApplicationController
         done.push(task)
       end
     end
+
     size = [ todo.size, inprogress.size, intesting.size, rejected.size, done.size ].max
     @tasks = []
     size.times do |i|
@@ -65,6 +61,29 @@ class ProjectsController < ApplicationController
       @tasks.push(done[i])
     end
     @states = [ "To Do", "In Progress", "In Testing", "Rejected", "Done" ]
+  end
+
+  def edit
+    @project = Project.find(params[:id])
+    authorize @project
+  end
+
+  def update
+    @project = Project.find(params[:id])
+    authorize @project
+    if @project.update(project_params)
+      redirect_to projects_path, notice: "Проект успешно обновлен."
+    else
+      flash.now[:alert] = @project.errors.full_messages.to_sentence
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    project = Project.find(params[:id])
+    authorize project
+    project.destroy
+    redirect_to projects_path, notice: "Проект успешно удалён."
   end
 
   private

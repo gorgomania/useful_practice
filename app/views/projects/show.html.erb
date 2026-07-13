@@ -23,7 +23,7 @@
 
       <% @tasks.each do |task| %>
         <%if task %>
-          <div class="bg-white rounded-xl px-5 py-3">
+          <div class="bg-white rounded-xl p-3">
             <div class = "flex justify-end gap-1">
               <%= button_to edit_project_task_path(@project, task), method: :get, class: "cursor-pointer rounded-lg ml-1 p-2 bg-white hover:bg-[#f2f2f2]" do %>
                 <%= image_tag "/pencil.png", class: "w-4 h-4" %>

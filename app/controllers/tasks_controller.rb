@@ -15,7 +15,7 @@ class TasksController < ApplicationController
     authorize @task
 
     if @task.save
-      redirect_to project_path(@project), notice: "Задача успешно создана"
+      redirect_to project_path(@project), notice: "Задача успешно создана."
     else
       @name = task_params[:name]
       flash.now[:alert] = @task.errors.full_messages.to_sentence
@@ -31,7 +31,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(name: task_params[:name]) && update_state(@task, task_params[:state])
-      redirect_to project_path(@project), notice: "Задача успешно обновлена"
+      redirect_to project_path(@project), notice: "Задача успешно обновлена."
     else
       @options = status_options(@task.state)
       flash.now[:alert] = if @task.errors.any?
@@ -45,7 +45,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    redirect_to project_path(@project), notice: "Задача успешно удалена"
+    redirect_to project_path(@project), notice: "Задача успешно удалена."
   end
 
   private

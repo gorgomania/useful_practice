@@ -2,6 +2,7 @@ class ProjectPolicy < ApplicationPolicy
   def index?   = true
   def show?    = owner?
   def create?  = true
+  def edit?    = owner?
   def update?  = owner?
   def destroy? = owner?
 
