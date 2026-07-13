@@ -2,20 +2,22 @@ class TasksController < ApplicationController
   before_action :set_project
   before_action :set_task, only: [ :show, :edit, :update, :destroy ]
 
-  def new
-  end
-
   def show
     redirect_to project_path(@project)
   end
 
+  def new
+    authorize @project.tasks.new
+  end
+
   def create
-    @task = @project.task.new(task_params)
+    @task = @project.tasks.new(task_params)
     authorize @task
 
     if @task.save
       redirect_to project_path(@project), notice: "Задача успешно создана"
     else
+      @name = task_params[:name]
       flash.now[:alert] = @task.errors.full_messages.to_sentence
       render :new, status: :unprocessable_entity
     end
@@ -53,7 +55,7 @@ class TasksController < ApplicationController
   end
 
   def set_task
-    @task = @project.task.find(params[:id])
+    @task = @project.tasks.find(params[:id])
     authorize @task
   end
 

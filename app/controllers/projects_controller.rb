@@ -23,6 +23,9 @@ class ProjectsController < ApplicationController
     if @project.save
       redirect_to projects_path, notice: "Проект успешно создан"
     else
+      @name = project_params[:name]
+      @goal = project_params[:goal]
+      @description = project_params[:description]
       flash.now[:alert] = @project.errors.full_messages.to_sentence
       render :new, status: :unprocessable_entity
     end
@@ -32,7 +35,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     authorize @project
 
-    tasks = @project.task
+    tasks = @project.tasks
     todo = []
     inprogress = []
     intesting = []
