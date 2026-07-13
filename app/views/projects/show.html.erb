@@ -7,7 +7,7 @@
     </h1>
 
     <% flash.each do |type, msg| %>
-      <div class = "px-3 h-9 border rounded-lg flex items-center justify-center border-[#0a9130] text-[#0a9130] bg-[#a0e7b1]">
+      <div class = "px-3 h-9 border rounded-lg flex items-center justify-center <%= type == "alert" ? "border-[#910a0a] text-[#910a0a] bg-[#e7a0a0]" : "border-[#0a9130] text-[#0a9130] bg-[#a0e7b1]" %>">
         <%= msg %>
       </div>
     <% end %>
