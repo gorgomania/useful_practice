@@ -8,7 +8,7 @@
       <%= render "shared/floating_field", f: f, attribute: :name, label_text: "Имя", options: { autocomplete: "name", value: @task.name } %>
 
       <% if local_assigns[:state_options] %>
-        <%= f.select :state, state_options, {}, { class: "w-full p-3 text-base text-[#333] border border-[#e5e5e5] rounded-lg appearance-none bg-[#f2f2f2] bg-[url('/select.png')] bg-[length:12px] bg-[right_10px_center] bg-no-repeat hover:bg-[#e8e8e8] focus:bg-white focus:shadow-[0_0_0_1px_#0000000a,0_4px_4px_#0000000a,0_20px_40px_#00000014]" } %>
+        <%= f.select :state, local_assigns[:state_options], {}, { class: "w-full p-3 text-base text-[#333] border border-[#e5e5e5] rounded-lg appearance-none bg-[#f2f2f2] bg-[url('/select.png')] bg-[length:12px] bg-[right_10px_center] bg-no-repeat hover:bg-[#e8e8e8] focus:bg-white focus:shadow-[0_0_0_1px_#0000000a,0_4px_4px_#0000000a,0_20px_40px_#00000014]" } %>
       <% end %>
 
       <div class="actions">

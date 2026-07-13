@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   root "projects#index"
   resources :users, only: [:index]
   resources :projects do
-    resources :tasks
+    resources :tasks, except: [:show]
   end
   match "*unmatched", to: "application#error_not_found", via: :all
 end
