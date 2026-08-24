@@ -1,29 +1,29 @@
 # Useful Practice
 
-Веб-приложение для управления проектами и задачами. Каждый пользователь ведёт свои проекты с канбан-доской задач по статусам.
+A web application for managing projects and tasks. Each user maintains their own projects with a kanban board of tasks organized by status.
 
-## Стек
+## Stack
 
 - **Ruby on Rails 8.0**
 - **PostgreSQL**
 - **Tailwind CSS 4**
-- **Devise** — аутентификация
-- **Pundit** — авторизация
-- **state_machines** — управление статусами задач
+- **Devise** — authentication
+- **Pundit** — authorization
+- **state_machines** — task status management
 - **Hotwire (Turbo + Stimulus)**
 
-## Функционал
+## Features
 
-- Регистрация и вход (Devise)
-- CRUD проектов — у каждого проекта есть имя, цель и описание
-- CRUD задач внутри проекта
-- Канбан-доска задач по статусам: **To Do → In Progress → In Testing → Done / Rejected**
-- Поиск проектов по имени
-- Авторизация через Pundit — пользователь видит и управляет только своими данными
+- Sign up and sign in (Devise)
+- Project CRUD — each project has a name, goal, and description
+- Task CRUD within a project
+- Kanban board with task statuses: **To Do → In Progress → In Testing → Done / Rejected**
+- Project search by name
+- Authorization via Pundit — users can only see and manage their own data
 
-## Локальный запуск
+## Local Setup
 
-**Зависимости:** Ruby 3.3.5, PostgreSQL
+**Requirements:** Ruby 3.3.5, PostgreSQL
 
 ```bash
 git clone <repo>
@@ -36,12 +36,12 @@ bin/rails db:create db:migrate
 bin/dev
 ```
 
-Приложение будет доступно на `http://localhost:3000`.
+The app will be available at `http://localhost:3000`.
 
-## Тесты
+## Tests
 
 ```bash
 bundle exec rspec
 ```
 
-Покрыты контроллеры, модели, переходы state machine и авторизация Pundit.
+Controllers, models, state machine transitions, and Pundit authorization are covered.
