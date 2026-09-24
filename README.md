@@ -38,6 +38,20 @@ bin/dev
 
 The app will be available at `http://localhost:3000`.
 
+## Screenshots
+
+**Authentication**
+![Authentication](docs/screenshots/authentification.png)
+
+**My Projects**
+![My Projects](docs/screenshots/projects.png)
+
+**Project Search**
+![Project Search](docs/screenshots/search_result.png)
+
+**Kanban Board**
+![Kanban Board](docs/screenshots/tasks.png)
+
 ## Tests
 
 ```bash
