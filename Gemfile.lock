@@ -365,7 +365,7 @@ GEM
       net-sftp (>= 2.1.2)
       net-ssh (>= 2.8.0)
       ostruct
-    state_machines (0.50.0)
+    state_machines (0.202.0)
     state_machines-activemodel (0.31.0)
       activemodel (>= 7.1)
       state_machines (>= 0.31.0)
