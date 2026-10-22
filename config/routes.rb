@@ -12,9 +12,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "projects#index"
-  resources :users, only: [:index]
+  resources :users, only: [ :index ]
   resources :projects do
-    resources :tasks, except: [:show]
+    resources :tasks, except: [ :show ]
   end
   match "*unmatched", to: "application#error_not_found", via: :all
 end
