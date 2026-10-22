@@ -3,17 +3,18 @@ development:
   encoding: unicode
   database: useful_practice_development
   pool: 5
-  host: localhost
-  username: gorgomania
-  password: 4555008
+  host: <%= ENV["DB_HOST"] %>
+  username: <%= ENV["DB_USERNAME"] %>
+  password: <%= ENV["DB_PASSWORD"] %>
 
 test:
   adapter: postgresql
   encoding: unicode
   database: useful_practice_test
   pool: 5
-  username: gorgomania
-  password: 4555008
+  host: <%= ENV["DB_HOST"] %>
+  username: <%= ENV["DB_USERNAME"] %>
+  password: <%= ENV["DB_PASSWORD"] %>
 
 staging:
   url: <%= ENV['DATABASE_URL'] %>
