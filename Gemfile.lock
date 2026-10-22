@@ -131,7 +131,7 @@ GEM
     factory_bot_rails (6.5.1)
       factory_bot (~> 6.5)
       railties (>= 6.1.0)
-    ffaker (2.24.0)
+    ffaker (2.25.0)
     fugit (1.14.0)
       et-orbi (~> 1.4)
       raabro (~> 1.4)
