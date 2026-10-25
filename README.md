@@ -28,7 +28,17 @@ A web application for managing projects and tasks. Each user maintains their own
 ```bash
 git clone <repo>
 cd useful_practice
+```
 
+Create a `.env` file in the project root:
+
+```
+DB_HOST=localhost
+DB_USERNAME=your_postgres_username
+DB_PASSWORD=your_postgres_password
+```
+
+```bash
 bundle install
 
 bin/rails db:create db:migrate
