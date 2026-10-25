@@ -4,7 +4,7 @@ A web application for managing projects and tasks. Each user maintains their own
 
 ## Stack
 
-- **Ruby on Rails 8.0**
+- **Ruby on Rails 8.1**
 - **PostgreSQL**
 - **Tailwind CSS 4**
 - **Devise** — authentication
@@ -23,7 +23,7 @@ A web application for managing projects and tasks. Each user maintains their own
 
 ## Local Setup
 
-**Requirements:** Ruby 3.3.5, PostgreSQL
+**Requirements:** Ruby 3.3.12, PostgreSQL
 
 ```bash
 git clone <repo>
