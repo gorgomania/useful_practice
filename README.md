@@ -68,7 +68,7 @@ The app will be available at `http://localhost:3000`.
 bundle exec rspec
 ```
 
-**Stack:** RSpec + FactoryBot. 102 examples total.
+**Stack:** RSpec + FactoryBot. 84 examples total.
 
 ### Model specs (`spec/models/`)
 
@@ -96,7 +96,7 @@ bundle exec rspec
 
 Requests go through the full stack (routing, middleware, Devise, real view rendering). Each action is tested against three scenarios:
 1. Resource does not exist → 404 page
-2. Resource belongs to another user → `redirect_to root_path` with an alert (Pundit)
+2. Resource belongs to another user → 404 page (lookup goes through `policy_scope`)
 3. Resource belongs to current user → normal behavior
 
 **`projects_spec.rb`** — all 7 routes:
@@ -109,24 +109,9 @@ Requests go through the full stack (routing, middleware, Devise, real view rende
 - `DELETE /projects/:id` — deletes own project; does not delete another user's project
 
 **`tasks_spec.rb`** — all 5 routes (no `show`):
-- Project lookup uses `policy_scope`, so a foreign project returns 404 (not a redirect)
 - `POST` — blank name re-renders the form with 422; valid params create the task
 - `PATCH` — name and state updated separately in assertions; invalid state re-renders the form with an error and does not save the new name
 - `DELETE` — deletes the task; returns 404 for non-existent task
 
 **`users_spec.rb`**
 - `GET /users` — redirects when not signed in; renders the profile page when signed in
-
-### Policy specs (`spec/policies/`)
-
-**`project_policy_spec.rb`**
-- `index?` / `create?` — always allowed for any authenticated user
-- `show?` / `edit?` / `update?` / `destroy?` — allowed for the owner, denied for a non-owner
-- `Scope#resolve` — returns only projects belonging to the current user
-
-**`task_policy_spec.rb`**
-- All four actions (`show?`, `create?`, `update?`, `destroy?`) — allowed when the current user owns the task's project, denied otherwise
-
-**`user_policy_spec.rb`**
-- `index?` — always allowed for any authenticated user
-
