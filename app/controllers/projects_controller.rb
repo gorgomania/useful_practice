@@ -54,7 +54,7 @@ class ProjectsController < ApplicationController
   private
 
   def set_project
-    @project = Project.find(params[:id])
+    @project = policy_scope(Project).find(params[:id])
     authorize @project
   end
 

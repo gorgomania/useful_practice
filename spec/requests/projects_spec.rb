@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "Projects", type: :request do
-  let(:access_denied) { "У вас нет доступа к этому ресурсу." }
-
   describe "GET /projects" do
     context "when user is not logged in" do
       it "redirects to login page" do
@@ -58,10 +56,9 @@ RSpec.describe "Projects", type: :request do
     context "when project belongs to another user" do
       let(:other_project) { create(:project) }
 
-      it "redirects with alert" do
+      it "renders 404" do
         get project_path(other_project)
-        expect(response).to redirect_to(root_path)
-        expect(flash[:alert]).to eq(access_denied)
+        expect_not_found_page
       end
     end
 
@@ -160,10 +157,9 @@ RSpec.describe "Projects", type: :request do
     context "when project belongs to another user" do
       let(:other_project) { create(:project) }
 
-      it "redirects with alert" do
+      it "renders 404" do
         get edit_project_path(other_project)
-        expect(response).to redirect_to(root_path)
-        expect(flash[:alert]).to eq(access_denied)
+        expect_not_found_page
       end
     end
 
@@ -192,10 +188,9 @@ RSpec.describe "Projects", type: :request do
     context "when project belongs to another user" do
       let(:other_project) { create(:project) }
 
-      it "redirects with alert" do
+      it "renders 404" do
         patch project_path(other_project), params: { projects: { name: "new name" } }
-        expect(response).to redirect_to(root_path)
-        expect(flash[:alert]).to eq(access_denied)
+        expect_not_found_page
       end
     end
 
@@ -238,10 +233,9 @@ RSpec.describe "Projects", type: :request do
     context "when project belongs to another user" do
       let!(:other_project) { create(:project) }
 
-      it "redirects with alert" do
+      it "renders 404" do
         delete project_path(other_project)
-        expect(response).to redirect_to(root_path)
-        expect(flash[:alert]).to eq(access_denied)
+        expect_not_found_page
       end
 
       it "does not delete the project" do
