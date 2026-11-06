@@ -9,6 +9,7 @@ RSpec.describe Task, type: :model do
     it "is invalid without a name" do
       task = build(:task, name: "")
       expect(task).not_to be_valid
+      expect(task.errors).to be_of_kind(:name, :blank)
     end
 
     it "is invalid with duplicate name in the same project" do
@@ -16,6 +17,7 @@ RSpec.describe Task, type: :model do
       create(:task, name: "hegemon", project: project)
       duplicate = build(:task, name: "hegemon", project: project)
       expect(duplicate).not_to be_valid
+      expect(duplicate.errors).to be_of_kind(:name, :taken)
     end
 
     it "allows same name in different projects" do

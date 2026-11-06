@@ -9,6 +9,7 @@ RSpec.describe Project, type: :model do
     it "is invalid without a name" do
       project = build(:project, name: "")
       expect(project).not_to be_valid
+      expect(project.errors).to be_of_kind(:name, :blank)
     end
 
     it "is invalid with duplicate name for the same user" do
@@ -16,6 +17,7 @@ RSpec.describe Project, type: :model do
       create(:project, name: "hegemon", user: user)
       duplicate = build(:project, name: "hegemon", user: user)
       expect(duplicate).not_to be_valid
+      expect(duplicate.errors).to be_of_kind(:name, :taken)
     end
 
     it "allows same name for different users" do
@@ -46,10 +48,18 @@ RSpec.describe Project, type: :model do
     end
 
     it "returns tasks interleaved by state columns" do
-      todo = create(:task, project: project)
-      project.tasks_by_state.tap do |result|
-        expect(result).to include(todo)
-      end
+      first_todo = create(:task, project: project)
+      second_todo = create(:task, project: project)
+      in_progress = create(:task, state: "InProgress", project: project)
+      done = create(:task, state: "Done", project: project)
+
+      # Rows of 5 columns: ToDo, InProgress, InTesting, Rejected, Done
+      result = project.tasks_by_state
+
+      expect(result.size).to eq(10)
+      expect(result.values_at(0, 5)).to contain_exactly(first_todo, second_todo)
+      expect(result.values_at(1, 4)).to eq([ in_progress, done ])
+      expect(result.values_at(2, 3, 6, 7, 8, 9)).to all(be_nil)
     end
 
     it "includes nils for empty columns" do

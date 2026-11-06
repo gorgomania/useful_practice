@@ -9,17 +9,20 @@ RSpec.describe User, type: :model do
     it "is invalid without email" do
       user = build(:user, email: "")
       expect(user).not_to be_valid
+      expect(user.errors).to be_of_kind(:email, :blank)
     end
 
     it "is invalid with duplicate email" do
       create(:user, email: "test@example.com")
       duplicate = build(:user, email: "test@example.com")
       expect(duplicate).not_to be_valid
+      expect(duplicate.errors).to be_of_kind(:email, :taken)
     end
 
     it "is invalid without password" do
       user = build(:user, password: "", password_confirmation: "")
       expect(user).not_to be_valid
+      expect(user.errors).to be_of_kind(:password, :blank)
     end
   end
 
