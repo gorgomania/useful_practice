@@ -59,6 +59,12 @@ RSpec.describe "Tasks", type: :request do
         post project_tasks_path(other_project), params: { tasks: { name: "hegemon" } }
         expect_not_found_page
       end
+
+      it "does not create task" do
+        expect {
+          post project_tasks_path(other_project), params: { tasks: { name: "hegemon" } }
+        }.not_to change(Task, :count)
+      end
     end
 
     context "when project belongs to current user" do
@@ -124,6 +130,15 @@ RSpec.describe "Tasks", type: :request do
         end
       end
 
+      context "when task belongs to a project of another user" do
+        let!(:foreign_task) { create(:task) }
+
+        it "renders 404" do
+          get edit_project_task_path(project, foreign_task)
+          expect_not_found_page
+        end
+      end
+
       context "when task exists" do
         let!(:task) { create(:task, name: "hegemon", project: project) }
 
@@ -155,6 +170,12 @@ RSpec.describe "Tasks", type: :request do
         patch project_task_path(other_project, task), params: { tasks: { name: "hegemon" } }
         expect_not_found_page
       end
+
+      it "does not update the task" do
+        expect {
+          patch project_task_path(other_project, task), params: { tasks: { name: "hegemon", state: "In Progress" } }
+        }.not_to change { task.reload.name }
+      end
     end
 
     context "when project belongs to current user" do
@@ -165,6 +186,21 @@ RSpec.describe "Tasks", type: :request do
         it "renders 404" do
           patch project_task_path(project, 0), params: { tasks: { name: "hegemon" } }
           expect_not_found_page
+        end
+      end
+
+      context "when task belongs to a project of another user" do
+        let!(:foreign_task) { create(:task) }
+
+        it "renders 404" do
+          patch project_task_path(project, foreign_task), params: { tasks: { name: "hegemon" } }
+          expect_not_found_page
+        end
+
+        it "does not update the task" do
+          expect {
+            patch project_task_path(project, foreign_task), params: { tasks: { name: "hegemon", state: "In Progress" } }
+          }.not_to change { foreign_task.reload.name }
         end
       end
 
@@ -228,6 +264,10 @@ RSpec.describe "Tasks", type: :request do
         delete project_task_path(other_project, task)
         expect_not_found_page
       end
+
+      it "does not delete the task" do
+        expect { delete project_task_path(other_project, task) }.not_to change(Task, :count)
+      end
     end
 
     context "when project belongs to current user" do
@@ -237,6 +277,19 @@ RSpec.describe "Tasks", type: :request do
         it "renders 404" do
           delete project_task_path(project, 0)
           expect_not_found_page
+        end
+      end
+
+      context "when task belongs to a project of another user" do
+        let!(:foreign_task) { create(:task) }
+
+        it "renders 404" do
+          delete project_task_path(project, foreign_task)
+          expect_not_found_page
+        end
+
+        it "does not delete the task" do
+          expect { delete project_task_path(project, foreign_task) }.not_to change(Task, :count)
         end
       end
 
@@ -252,6 +305,31 @@ RSpec.describe "Tasks", type: :request do
           expect { delete project_task_path(project, task) }.to change(Task, :count).by(-1)
         end
       end
+    end
+  end
+
+  describe "when user is not logged in" do
+    let!(:task) { create(:task) }
+    let(:project) { task.project }
+
+    it "redirects POST /projects/:project_id/tasks to login page" do
+      post project_tasks_path(project), params: { tasks: { name: "hegemon" } }
+      expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "redirects GET /projects/:project_id/tasks/:id/edit to login page" do
+      get edit_project_task_path(project, task)
+      expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "redirects PATCH /projects/:project_id/tasks/:id to login page" do
+      patch project_task_path(project, task), params: { tasks: { name: "hegemon" } }
+      expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "redirects DELETE /projects/:project_id/tasks/:id to login page" do
+      delete project_task_path(project, task)
+      expect(response).to redirect_to(new_user_session_path)
     end
   end
 end

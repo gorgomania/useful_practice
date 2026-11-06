@@ -68,7 +68,7 @@ The app will be available at `http://localhost:3000`.
 bundle exec rspec
 ```
 
-**Stack:** RSpec + FactoryBot. 84 examples total.
+**Stack:** RSpec + FactoryBot. 103 examples total.
 
 ### Model specs (`spec/models/`)
 
@@ -99,6 +99,8 @@ Requests go through the full stack (routing, middleware, Devise, real view rende
 2. Resource belongs to another user → 404 page (lookup goes through `policy_scope`)
 3. Resource belongs to current user → normal behavior
 
+Requests from a signed-out user redirect to the login page. Requests against a foreign resource also check that nothing was created, changed or deleted.
+
 **`projects_spec.rb`** — all 7 routes:
 - `GET /projects` — redirects when not signed in; shows only current user's projects; filters by name search query
 - `GET /projects/new` — redirects when not signed in; renders form when signed in
@@ -112,6 +114,7 @@ Requests go through the full stack (routing, middleware, Devise, real view rende
 - `POST` — blank name re-renders the form with 422; valid params create the task
 - `PATCH` — name and state updated separately in assertions; invalid state re-renders the form with an error and does not save the new name
 - `DELETE` — deletes the task; returns 404 for non-existent task
+- A foreign task addressed through the user's own project URL returns 404 for `edit`, `PATCH` and `DELETE`
 
 **`users_spec.rb`**
 - `GET /users` — redirects when not signed in; renders the profile page when signed in

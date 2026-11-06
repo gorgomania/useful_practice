@@ -38,6 +38,12 @@ RSpec.describe "Projects", type: :request do
           expect(response.body).to include("Результаты поиска", "hegemon")
           expect(response.body).not_to include("something_else")
         end
+
+        it "does not find projects of other users" do
+          create(:project, name: "hegemon of another user")
+          get projects_path, params: { projects: { name: "hegemon" } }
+          expect(response.body).not_to include("hegemon of another user")
+        end
       end
     end
   end
@@ -192,6 +198,12 @@ RSpec.describe "Projects", type: :request do
         patch project_path(other_project), params: { projects: { name: "new name" } }
         expect_not_found_page
       end
+
+      it "does not update the project" do
+        expect {
+          patch project_path(other_project), params: { projects: { name: "new name" } }
+        }.not_to change { other_project.reload.name }
+      end
     end
 
     context "when project belongs to current user" do
@@ -254,6 +266,35 @@ RSpec.describe "Projects", type: :request do
       it "deletes the project" do
         expect { delete project_path(project) }.to change(Project, :count).by(-1)
       end
+    end
+  end
+
+  describe "when user is not logged in" do
+    let!(:project) { create(:project) }
+
+    it "redirects POST /projects to login page" do
+      post projects_path, params: { projects: { name: "new name" } }
+      expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "redirects GET /projects/:id to login page" do
+      get project_path(project)
+      expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "redirects GET /projects/:id/edit to login page" do
+      get edit_project_path(project)
+      expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "redirects PATCH /projects/:id to login page" do
+      patch project_path(project), params: { projects: { name: "new name" } }
+      expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "redirects DELETE /projects/:id to login page" do
+      delete project_path(project)
+      expect(response).to redirect_to(new_user_session_path)
     end
   end
 end
