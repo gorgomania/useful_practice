@@ -61,8 +61,6 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
   gem "rspec-rails", "~> 8.0.0"
   gem "factory_bot_rails"
-  gem "ffaker"
-  gem "rails-controller-testing"
 end
 
 group :development do

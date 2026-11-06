@@ -68,7 +68,7 @@ The app will be available at `http://localhost:3000`.
 bundle exec rspec
 ```
 
-**Stack:** RSpec + FactoryBot + FFaker + `rails-controller-testing`. 100 examples total.
+**Stack:** RSpec + FactoryBot. 102 examples total.
 
 ### Model specs (`spec/models/`)
 
@@ -92,29 +92,30 @@ bundle exec rspec
 - Validations: email required, email must be unique, password required
 - Associations: `dependent: :destroy` removes projects when user is destroyed
 
-### Controller specs (`spec/controllers/`)
+### Request specs (`spec/requests/`)
 
-Each action is tested against three scenarios:
-1. Resource does not exist → renders 404
-2. Resource belongs to another user → `redirect_to root_path` (Pundit)
+Requests go through the full stack (routing, middleware, Devise, real view rendering). Each action is tested against three scenarios:
+1. Resource does not exist → 404 page
+2. Resource belongs to another user → `redirect_to root_path` with an alert (Pundit)
 3. Resource belongs to current user → normal behavior
 
-**`projects_controller_spec.rb`** — all 6 CRUD actions:
-- `GET #index` — redirects when not signed in; scopes projects to current user; filters by name search query
-- `GET #new` — redirects when not signed in; renders form when signed in
-- `POST #create` — blank name re-renders `:new` without creating a record; duplicate name re-renders `:new`; valid params create the project and redirect
-- `GET #show` / `GET #edit` — authorization checks
-- `PATCH #update` — updates the record; blank name re-renders `:edit`
-- `DELETE #destroy` — deletes own project; does not delete another user's project
+**`projects_spec.rb`** — all 7 routes:
+- `GET /projects` — redirects when not signed in; shows only current user's projects; filters by name search query
+- `GET /projects/new` — redirects when not signed in; renders form when signed in
+- `POST /projects` — blank or duplicate name re-renders the form with 422; valid params create the project and redirect
+- `GET /projects/:id` — shows the project with its tasks or an empty state; authorization checks
+- `GET /projects/:id/edit` — renders the form with current values; authorization checks
+- `PATCH /projects/:id` — updates the record; blank name re-renders the form with 422
+- `DELETE /projects/:id` — deletes own project; does not delete another user's project
 
-**`tasks_controller_spec.rb`** — all 5 actions (no `show`):
+**`tasks_spec.rb`** — all 5 routes (no `show`):
 - Project lookup uses `policy_scope`, so a foreign project returns 404 (not a redirect)
-- `POST #create` — blank name re-renders `:new`; valid params create the task
-- `PATCH #update` — name and state updated separately in assertions; `state: nil` re-renders `:edit`
-- `DELETE #destroy` — deletes the task; returns 404 for non-existent task
+- `POST` — blank name re-renders the form with 422; valid params create the task
+- `PATCH` — name and state updated separately in assertions; invalid state re-renders the form with an error and does not save the new name
+- `DELETE` — deletes the task; returns 404 for non-existent task
 
-**`users_controller_spec.rb`**
-- `GET #index` — redirects when not signed in; renders index template when signed in
+**`users_spec.rb`**
+- `GET /users` — redirects when not signed in; renders the profile page when signed in
 
 ### Policy specs (`spec/policies/`)
 
