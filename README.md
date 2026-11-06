@@ -68,7 +68,7 @@ The app will be available at `http://localhost:3000`.
 bundle exec rspec
 ```
 
-**Stack:** RSpec + FactoryBot + FFaker + DatabaseCleaner + `rails-controller-testing`. 100 examples total.
+**Stack:** RSpec + FactoryBot + FFaker + `rails-controller-testing`. 100 examples total.
 
 ### Model specs (`spec/models/`)
 
