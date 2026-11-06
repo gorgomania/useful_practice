@@ -4,12 +4,10 @@ class TasksController < ApplicationController
 
   def new
     @task = @project.tasks.new
-    authorize @task
   end
 
   def create
     @task = @project.tasks.new(task_params)
-    authorize @task
 
     if @task.save
       redirect_to project_path(@project), notice: "Задача успешно создана."
@@ -56,7 +54,6 @@ class TasksController < ApplicationController
 
   def set_task
     @task = @project.tasks.find(params[:id])
-    authorize @task
   end
 
   def update_state(task, state)
